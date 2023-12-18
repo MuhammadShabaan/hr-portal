@@ -13,13 +13,14 @@ const Dashboard = () => {
   const fetcher = async (url: string): Promise<UsersList | undefined> => {
     const response = await fetch(url);
     const data = await response.json();
-    console.log("data", data);
+
     return data;
   };
   const { data, error, isLoading } = useSWR(
     "http://127.0.0.1:8090/api/collections/users/records",
     fetcher
   );
+  console.log(data);
 
   const [hideUserModal, setHideUserModal] = useState<boolean>(false);
   const [userType, setUserType] = useState<string>("");
@@ -35,6 +36,7 @@ const Dashboard = () => {
       )}
       <Sidebar user={user} />
       <Board
+        // usersList={data?.items}
         setHideUserModal={(userType: string) => {
           setHideUserModal(!hideUserModal);
           setUserType(userType);

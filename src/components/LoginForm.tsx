@@ -1,12 +1,15 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import Pocketbase from "pocketbase";
 import { useNavigate } from "react-router-dom";
 import { LoginFormInterface } from "../types/Types";
+import { UserContext } from "@/context/UserContext";
 
 const LoginForm: React.FC = (): JSX.Element => {
   const pb = new Pocketbase("http://127.0.0.1:8090");
+
+  const { setUser } = useContext(UserContext);
 
   const [formData, setFormData] = useState<LoginFormInterface>({
     email: "",
@@ -37,50 +40,13 @@ const LoginForm: React.FC = (): JSX.Element => {
 
     if (loggedInUser != null && loggedInUser != undefined) {
       window.localStorage.setItem("user", JSON.stringify(loggedInUser.record));
+      setUser(loggedInUser.record);
       navigate("/dashboard");
     } else {
       console.log("Can not store null or undefined value in local sotrage");
     }
-
-    // console.log("authData====>", loggedInUser.record);
-    // const username = formData.email.split("@")[0];
-    // const data = {
-    //   username: username,
-    //   email: formData.email,
-    //   emailVisibility: true,
-    //   password: formData.password,
-    //   passwordConfirm: formData.password,
-    //   roles: "manager",
-    // };
-    // const user = await pb
-    //   .collection("users")
-    //   .create(data)
-    //   .then((result) => {
-    //     return result;
-    //   })
-    //   .catch((error) => {
-    //     console.log("error catch==========,", error.response);
-    //   });
-
-    // if (user?.id) {
-    //   window.localStorage.setItem("user", JSON.stringify(user));
-    //   navigate("/dashboard");
-    // }
   };
 
-  // const options = [
-  //   { id: 0, text: "hello" },
-  //   { id: 1, text: "hello1" },
-  //   { id: 2, text: "hello2" },
-  // ];
-
-  // const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  // const [selectedOption, setSelectedOption] = useState<any>(options[0]);
-
-  // const [errorMessage, setErrorMessage] = useState<any>();
-
-  //   console.log(formData);
   return (
     <div className="bg-neutral-200 rounded-md py-3 md:py-6 w-[542px] h-[600px] md:px-10 px-3 space-y-24">
       <p className="text-center text-h1b md:text-h3r capitalize">Login</p>
