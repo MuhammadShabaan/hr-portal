@@ -3,9 +3,9 @@ import Input from "./Input";
 import Button from "./Button";
 import { FaHome } from "react-icons/fa";
 
-const SignupForm = () => {
-  const [confirmPassword, setConfirmPassword] = useState<any>("");
-  console.log("conform passwod==>", confirmPassword);
+const SignupForm: React.FC = (): JSX.Element => {
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+
   const [formData, setFormData] = useState<any>({
     username: "",
     email: "",

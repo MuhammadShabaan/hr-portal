@@ -1,28 +1,28 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import Input from "./Input";
 import Button from "./Button";
-import TabButton from "./TabButton";
-import { FaHome } from "react-icons/fa";
-import DropDown from "./DropDown";
 import Pocketbase from "pocketbase";
 import { useNavigate } from "react-router-dom";
+import { LoginFormInterface } from "../types/Types";
 
-const LoginForm = () => {
+const LoginForm: React.FC = (): JSX.Element => {
   const pb = new Pocketbase("http://127.0.0.1:8090");
-  const [formData, setFormData] = useState<any>({
+
+  const [formData, setFormData] = useState<LoginFormInterface>({
     email: "",
     password: "",
   });
+
   const navigate = useNavigate();
 
-  const createForm = (key: any, value: any) => {
+  const createForm = (key: string, value: string): void => {
     setFormData({
       ...formData,
       [key]: value,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     const loggedInUser = await pb
@@ -32,12 +32,16 @@ const LoginForm = () => {
         return result;
       })
       .catch((error) => {
-        console.log("error===>", error);
+        console.log("error", error);
       });
-    if (loggedInUser?.record?.id) {
+
+    if (loggedInUser != null && loggedInUser != undefined) {
       window.localStorage.setItem("user", JSON.stringify(loggedInUser.record));
       navigate("/dashboard");
+    } else {
+      console.log("Can not store null or undefined value in local sotrage");
     }
+
     // console.log("authData====>", loggedInUser.record);
     // const username = formData.email.split("@")[0];
     // const data = {
@@ -87,14 +91,18 @@ const LoginForm = () => {
             type="text"
             placeholder={"xyz@example.com"}
             value={formData.email}
-            onChange={(e) => createForm("email", e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              createForm("email", e.target.value)
+            }
           />
           <Input
             label="Password"
             type="password"
             value={formData.password}
             placeholder={"password"}
-            onChange={(e) => createForm("password", e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              createForm("password", e.target.value)
+            }
           />
 
           <Button

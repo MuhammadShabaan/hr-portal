@@ -10,7 +10,7 @@ const CreateUserModal = ({ userRole, setHideUserModal }: any) => {
   ];
 
   return (
-    <>
+    <div>
       <div
         className="flex items-center justify-between gap-3 px-3 bg-neutral-800 rounded-md py-2 text-white cursor-pointer"
         onClick={() => setHide(!hide)}
@@ -19,7 +19,7 @@ const CreateUserModal = ({ userRole, setHideUserModal }: any) => {
         <p>Create</p>
       </div>
       {hide && (
-        <div className="absolute right-[12px] px-3 py-4 rounded  my-3 bg-neutral-800 flex flex-col items-center justify-center gap-6">
+        <div className="absolute right-[12px] px-3 py-4 rounded my-3 bg-neutral-800 flex flex-col items-center justify-center gap-6">
           {defaulUsers.map((user) => (
             <p
               key={user.id}
@@ -36,7 +36,7 @@ const CreateUserModal = ({ userRole, setHideUserModal }: any) => {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

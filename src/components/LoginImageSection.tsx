@@ -1,4 +1,4 @@
-const LoginImageSection = ({ userType = "admin" }: any) => {
+const LoginImageSection = ({ userType = "admin" }): JSX.Element => {
   const loginImage =
     userType === "admin"
       ? "../src/assets/images/admin-login 1.png"

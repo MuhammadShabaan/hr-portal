@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import Button from "./Button";
 import Input from "./Input";
 
 import Pocketbase from "pocketbase";
 import DropDown from "../components/DropDown";
+import { UserContext } from "../context/UserContext";
+
+interface role {
+  id: number;
+  text: string;
+}
+
+interface FormData {
+  email: string;
+  roles: string;
+}
 
 const CreateUser = ({ setHideUserModal, userType }: any) => {
-  const [user, setUser] = useState<any>(() => {
-    const savedUser: any = window.localStorage.getItem("user");
-    return JSON.parse(savedUser);
-  });
+  const { user } = useContext(UserContext);
 
   const defaulRoles = [
     { id: 1, text: "admin" },
@@ -29,18 +37,18 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
     });
   }
 
-  const [selectedRole, setSelectedRole] = useState<any>();
+  const [selectedRole, setSelectedRole] = useState<role | string>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [successMessage, setSuccessMessage] = useState<any>();
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const pb = new Pocketbase("http://127.0.0.1:8090");
 
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     roles: "",
   });
 
-  const createForm = (key: any, value: any) => {
+  const createForm = (key: string, value: string): void => {
     setFormData({
       ...formData,
       [key]: value,
@@ -49,7 +57,7 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
 
   console.log("user==>", user);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     const username = formData.email.split("@")[0];
@@ -106,7 +114,9 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
               type="text"
               placeholder={"xyz@example.com"}
               value={formData.email}
-              onChange={(e) => createForm("email", e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                createForm("email", e.target.value)
+              }
             />
             <DropDown
               isOpen={isOpen}

@@ -1,7 +1,8 @@
 import ProfileInfo from "./ProfileInfo";
 import Tabs from "./Tabs";
+import { User } from "../types/Types";
 
-const Sidebar = ({ user }: any) => {
+const Sidebar = ({ user }: User) => {
   return (
     <div className="bg-primary-800 w-[20%] ">
       <div className="flex items-center justify-center">

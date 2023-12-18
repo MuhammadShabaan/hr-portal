@@ -1,7 +1,8 @@
+import React from "react";
 import LoginImageSection from "../components/LoginImageSection";
 import LoginForm from "../components/LoginForm";
 
-const Login = () => {
+const Login: React.FC = (): JSX.Element => {
   return (
     <div className="bg-primary-800 w-screen h-screen flex items-center justify-center">
       <div className="flex justify-between items-center gap-20">

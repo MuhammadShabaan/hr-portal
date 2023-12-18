@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
 import MenuDashboard from "./MenuDashboard";
-import { IoPersonOutline } from "react-icons/io5";
 import CreateUserModal from "./CreateUserModal";
+import { User } from "../types/Types";
 
-const Board = ({ setHideUserModal }) => {
-  const loggedInUser = JSON.parse(window.localStorage.getItem("user"));
+interface HideModal {
+  setHideUserModal: () => {};
+}
+const Board = ({ setHideUserModal }: HideModal): JSX.Element => {
+  const loggedInUser: User = JSON.parse(window.localStorage.getItem("user"));
+
   const navigate = useNavigate();
-  const logOutUser = () => {
+
+  const logOutUser = (): void => {
     window.localStorage.removeItem("user");
     navigate("/");
   };

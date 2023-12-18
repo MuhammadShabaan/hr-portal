@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { IoPersonOutline } from "react-icons/io5";
+import { LogOutUser } from "../types/Types";
 
-const Info = ({ logOutUser }: any) => {
+const Info = ({ logOutUser }: LogOutUser): JSX.Element => {
   const [hide, setHide] = useState<boolean>(false);
 
   return (

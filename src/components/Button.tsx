@@ -1,4 +1,10 @@
-const Button = ({ icon, label, disabled, onClick, color = "primary-900" }) => {
+const Button = ({
+  icon,
+  label,
+  disabled,
+  onClick,
+  color = "primary-900",
+}): JSX.Element => {
   return (
     <div className="my-8">
       <button
