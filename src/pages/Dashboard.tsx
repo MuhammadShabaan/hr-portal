@@ -6,9 +6,14 @@ import CreateUser from "../components/CreateUser";
 import useSWR from "swr";
 import { UserContext } from "../context/UserContext";
 import { User, UsersList } from "../types/Types";
+import Certificate from "../components/Certificate";
+import EmployeePayslip from "../components/EmployeePayslip";
+import Suggestions from "../components/Suggestions";
+import UserRequest from "../components/UserRequest";
+import EmployeeAllowance from "../components/EmployeeAllowance";
 
 const Dashboard = () => {
-  const { user }: { user: User } = useContext(UserContext);
+  const { user }: any = useContext(UserContext);
 
   const fetcher = async (url: string): Promise<UsersList | undefined> => {
     const response = await fetch(url);
@@ -20,10 +25,23 @@ const Dashboard = () => {
     "http://127.0.0.1:8090/api/collections/users/records",
     fetcher
   );
-  console.log(data);
 
   const [hideUserModal, setHideUserModal] = useState<boolean>(false);
   const [userType, setUserType] = useState<string>("");
+  const [userComponent, setUserComponent] = useState<any>();
+
+  const userForms = (index: any) => {
+    console.log("index received===>", index);
+    const userFormComponents: any = [
+      <Certificate />,
+      <EmployeePayslip />,
+      <Suggestions />,
+      <EmployeeAllowance />,
+      <UserRequest />,
+    ];
+
+    return setUserComponent(userFormComponents[index]);
+  };
 
   return (
     <div className="flex w-screen h-screen ">
@@ -34,13 +52,17 @@ const Dashboard = () => {
           userType={userType}
         />
       )}
-      <Sidebar user={user} />
+      <Sidebar
+        user={user}
+        selectFormElement={(index: any) => userForms(index)}
+      />
       <Board
         // usersList={data?.items}
         setHideUserModal={(userType: string) => {
           setHideUserModal(!hideUserModal);
           setUserType(userType);
         }}
+        employeeComponent={userComponent}
       />
     </div>
   );

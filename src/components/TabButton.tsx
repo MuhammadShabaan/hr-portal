@@ -11,7 +11,7 @@ const TabButton = ({
         className={`flex justify-start items-center pr-16 pl-5 py-3 space-x-4 bg-${color}`}
         onClick={(e) => {
           e.preventDefault();
-          onClick;
+          onClick();
         }}
       >
         {icon && icon}

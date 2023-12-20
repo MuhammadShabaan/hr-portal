@@ -2,7 +2,7 @@ import ProfileInfo from "./ProfileInfo";
 import Tabs from "./Tabs";
 import { User } from "../types/Types";
 
-const Sidebar = ({ user }: User) => {
+const Sidebar = ({ user, selectFormElement }: any) => {
   return (
     <div className="bg-primary-800 w-[20%] ">
       <div className="flex items-center justify-center">
@@ -14,7 +14,7 @@ const Sidebar = ({ user }: User) => {
           />
         </div>
       </div>
-      <Tabs />
+      <Tabs selectFormElement={selectFormElement} />
       <p className="text-center">Logo</p>
     </div>
   );

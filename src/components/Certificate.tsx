@@ -8,6 +8,7 @@ import DropDown from "./DropDown";
 
 const Certificate: React.FC = (): JSX.Element => {
   const pb = new Pocketbase("http://127.0.0.1:8090");
+  console.log("certificagte component");
 
   const options = [
     { id: 1, text: "certificate" },
