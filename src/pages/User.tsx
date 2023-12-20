@@ -36,7 +36,7 @@ const User = () => {
 
   console.log("user==>", user);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const username = formData.email.split("@")[0];

@@ -4,7 +4,8 @@ const Button = ({
   disabled,
   onClick,
   color = "primary-900",
-}): JSX.Element => {
+  type,
+}: any): JSX.Element => {
   return (
     <div className="my-8">
       <button
@@ -13,6 +14,7 @@ const Button = ({
         }`}
         disabled={disabled}
         onClick={onClick}
+        type={type}
       >
         {icon && icon}
         {<p className="capitalize">{label}</p>}

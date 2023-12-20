@@ -9,12 +9,15 @@ import PocketBase from "pocketbase";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import UpdateInfo from "./UpdateInfo";
+import Certificate from "./Certificate";
+import Suggestions from "./Suggestions";
+import UserRequest from "./UserRequest";
 
 interface HideModal {
   setHideUserModal(): void;
 }
 const Board = ({ setHideUserModal }: HideModal): JSX.Element => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser }: any = useContext(UserContext);
 
   const pb = new PocketBase("http://127.0.0.1:8090");
 
@@ -32,7 +35,10 @@ const Board = ({ setHideUserModal }: HideModal): JSX.Element => {
       <MenuDashboard logOutUser={() => logOutUser()} />
       {user?.roles === "employee" ? (
         <div className="flex items-center justify-center w-full ">
-          <UpdateInfo />
+          {/* <UpdateInfo /> */}
+          {/* <Certificate /> */}
+          {/* <Suggestions /> */}
+          <UserRequest />
         </div>
       ) : (
         <div className="flex justify-end px-3 py-5">
