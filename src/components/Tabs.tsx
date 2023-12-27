@@ -5,11 +5,11 @@ import {
   FaTeamspeak,
   FaVoicemail,
 } from "react-icons/fa";
-import TabButton from "./TabButton";
+import TabButton from "../model/TabButton";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 
-const Tabs = ({ selectFormElement }: any) => {
+const Tabs = () => {
   const { user }: any = useContext(UserContext);
 
   return (
@@ -20,31 +20,32 @@ const Tabs = ({ selectFormElement }: any) => {
             icon={<FaHome className="text-white" />}
             label="Certificates"
             textColor="white"
-            onClick={() => selectFormElement(0)}
+            to="/certificates"
           />
+
           <TabButton
             icon={<FaTeamspeak className="text-white" />}
             label="Payslip"
             textColor="white"
-            onClick={() => selectFormElement(1)}
+            to="/payslip"
           />
           <TabButton
             icon={<FaCodeBranch className="text-white" />}
             label="Sugestions"
             textColor="white"
-            onClick={() => selectFormElement(2)}
+            to="/suggestions"
           />
           <TabButton
             icon={<FaVoicemail className="text-white" />}
             label="Allowances"
             textColor="white"
-            onClick={() => selectFormElement(3)}
+            to="/allowances"
           />
           <TabButton
             icon={<FaServer className="text-white" />}
             label="Requests"
             textColor="white"
-            onClick={() => selectFormElement(4)}
+            to="/requests"
           />
         </>
       ) : (

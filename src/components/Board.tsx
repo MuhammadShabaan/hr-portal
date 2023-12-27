@@ -1,25 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import MenuDashboard from "./MenuDashboard";
 import CreateUserModal from "./CreateUserModal";
-import { User } from "../types/Types";
-import { Button } from "./ui/button";
-import UsersListsTable from "./usersLists/usersTable";
-// import UsersListTable from "./table/table";
+
 import PocketBase from "pocketbase";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
-import UpdateInfo from "./UpdateInfo";
-import Certificate from "./Certificate";
-import Suggestions from "./Suggestions";
-import UserRequest from "./UserRequest";
-import EmployeeAllowance from "./EmployeeAllowance";
 
 interface HideModal {
   setHideUserModal(): void;
 }
-const Board = ({ setHideUserModal, employeeComponent }: any): JSX.Element => {
+const Board = ({ setHideUserModal, children }: any): JSX.Element => {
   const { user, setUser }: any = useContext(UserContext);
-  console.log("component", employeeComponent);
 
   const pb = new PocketBase("http://127.0.0.1:8090");
 
@@ -29,20 +20,14 @@ const Board = ({ setHideUserModal, employeeComponent }: any): JSX.Element => {
     window.localStorage.removeItem("user");
     pb.authStore.clear();
     setUser({});
-
     navigate("/");
   };
   return (
     <div className="bg-background-primary w-[80%]">
       <MenuDashboard logOutUser={() => logOutUser()} />
       {user?.roles === "employee" ? (
-        <div className="flex items-center justify-center w-full ">
-          {/* <UpdateInfo />
-          <Certificate />
-          <Suggestions />
-          <UserRequest />
-          <EmployeeAllowance /> */}
-          {employeeComponent}
+        <div className="flex items-center justify-center w-full mt-10">
+          {children}
         </div>
       ) : (
         <div className="flex justify-end px-3 py-5">

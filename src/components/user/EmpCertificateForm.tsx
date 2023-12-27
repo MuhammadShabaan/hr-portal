@@ -1,15 +1,10 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import Input from "./Input";
-import Button from "./Button";
-import Pocketbase from "pocketbase";
-import { useNavigate } from "react-router-dom";
-import { UserContext } from "@/context/UserContext";
-import DropDown from "./DropDown";
+import { useState, ChangeEvent, FormEvent } from "react";
+import Input from "../../model/Input";
+import Button from "../../model/Button";
+import DropDown from "../../model/DropDown";
+import { CreateCertRequest } from "../../api/user";
 
-const Certificate: React.FC = (): JSX.Element => {
-  const pb = new Pocketbase("http://127.0.0.1:8090");
-  console.log("certificagte component");
-
+const EmpCertificateForm: React.FC = (): JSX.Element => {
   const options = [
     { id: 1, text: "certificate" },
     { id: 2, text: "letter" },
@@ -18,13 +13,9 @@ const Certificate: React.FC = (): JSX.Element => {
     useState<any>("Select type");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { user, setUser }: any = useContext(UserContext);
-
   const [formData, setFormData] = useState<any>({
     title: "",
   });
-
-  //   const navigate = useNavigate();
 
   const createForm = (key: string, value: string): void => {
     setFormData({
@@ -32,8 +23,6 @@ const Certificate: React.FC = (): JSX.Element => {
       [key]: value,
     });
   };
-
-  console.log("updated user==> ", formData);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -43,19 +32,9 @@ const Certificate: React.FC = (): JSX.Element => {
       type: selectedCertificate.text,
     };
 
-    const record = await pb
-      .collection("certificate")
-      .create(data)
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-
-    console.log("certificate request sent", record);
-
-    if (record?.id) {
+    const certificate = await CreateCertRequest(data);
+    console.log("certificate ", certificate);
+    if (certificate?.id) {
       setFormData({ title: "" });
       setSelectedCertificate("Select here");
     }
@@ -98,4 +77,4 @@ const Certificate: React.FC = (): JSX.Element => {
   );
 };
 
-export default Certificate;
+export default EmpCertificateForm;

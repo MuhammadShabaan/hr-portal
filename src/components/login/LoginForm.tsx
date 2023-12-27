@@ -1,15 +1,13 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import Input from "./Input";
-import Button from "./Button";
-import Pocketbase from "pocketbase";
+import Input from "../../model/Input";
+import Button from "../../model/Button";
 import { useNavigate } from "react-router-dom";
-import { LoginFormInterface } from "../types/Types";
+import { LoginFormInterface } from "../../types/Types";
 import { UserContext } from "@/context/UserContext";
+import { UserLogin } from "../../api/user";
 
 const LoginForm: React.FC = (): JSX.Element => {
-  const pb = new Pocketbase("http://127.0.0.1:8090");
-
-  const { setUser } = useContext(UserContext);
+  const { setUser }: any = useContext(UserContext);
 
   const [formData, setFormData] = useState<LoginFormInterface>({
     email: "",
@@ -28,19 +26,11 @@ const LoginForm: React.FC = (): JSX.Element => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
-    const loggedInUser = await pb
-      .collection("users")
-      .authWithPassword(formData.email, formData.password)
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
+    const user = await UserLogin(formData);
 
-    if (loggedInUser != null && loggedInUser != undefined) {
-      window.localStorage.setItem("user", JSON.stringify(loggedInUser.record));
-      setUser(loggedInUser.record);
+    if (user != null && user != undefined) {
+      window.localStorage.setItem("user", JSON.stringify(user.record));
+      setUser(user.record);
       navigate("/dashboard");
     } else {
       console.log("Can not store null or undefined value in local sotrage");

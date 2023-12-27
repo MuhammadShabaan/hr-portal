@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import Input from "../components/Input";
-import Button from "../components/Button";
+import Input from "../model/Input";
+import Button from "../model/Button";
 import Pocketbase from "pocketbase";
-import DropDown from "../components/DropDown";
+import DropDown from "../model/DropDown";
 
 const User = () => {
   const [user, setUser] = useState<any>(() => {

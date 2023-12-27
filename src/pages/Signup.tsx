@@ -1,4 +1,4 @@
-import LoginImageSection from "../components/LoginImageSection";
+import LoginImageSection from "../components/login/LoginImageSection";
 import SignupForm from "../components/SignupForm";
 
 const Signup = () => {

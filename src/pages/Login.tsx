@@ -1,6 +1,6 @@
 import React from "react";
-import LoginImageSection from "../components/LoginImageSection";
-import LoginForm from "../components/LoginForm";
+import LoginImageSection from "../components/login/LoginImageSection";
+import LoginForm from "../components/login/LoginForm";
 
 const Login: React.FC = (): JSX.Element => {
   return (

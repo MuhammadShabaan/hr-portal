@@ -1,13 +1,10 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import Input from "./Input";
-import Button from "./Button";
-import Pocketbase from "pocketbase";
-import { useNavigate } from "react-router-dom";
+import Input from "../../model/Input";
+import Button from "../../model/Button";
 import { UserContext } from "@/context/UserContext";
+import { UpdateUserInfo } from "@/api/user";
 
 const UpdateInfo: React.FC = (): JSX.Element => {
-  const pb = new Pocketbase("http://127.0.0.1:8090");
-
   const { user, setUser }: any = useContext(UserContext);
 
   const [formData, setFormData] = useState<any>({
@@ -20,8 +17,6 @@ const UpdateInfo: React.FC = (): JSX.Element => {
     blood_group: "",
   });
 
-  const navigate = useNavigate();
-
   const createForm = (key: string, value: string): void => {
     setFormData({
       ...formData,
@@ -29,22 +24,10 @@ const UpdateInfo: React.FC = (): JSX.Element => {
     });
   };
 
-  console.log("updated user==> ", formData);
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
-    const updatedUser = await pb
-      .collection("users")
-      .update(user.id, formData)
-      .then((result) => {
-        return result;
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-
-    console.log("updated user", updatedUser);
+    const updatedUser = await UpdateUserInfo(user.id, formData);
 
     if (updatedUser != null && updatedUser != undefined) {
       window.localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -58,7 +41,6 @@ const UpdateInfo: React.FC = (): JSX.Element => {
         emergency_phone: "",
         blood_group: "",
       });
-      //   navigate("/dashboard");
     } else {
       console.log("Can not store null or undefined value in local sotrage");
     }

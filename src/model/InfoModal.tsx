@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { IoPersonOutline } from "react-icons/io5";
 import { LogOutUser } from "../types/Types";
+import { useNavigate } from "react-router-dom";
 
 const Info = ({ logOutUser }: LogOutUser): JSX.Element => {
   const [hide, setHide] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -16,7 +18,10 @@ const Info = ({ logOutUser }: LogOutUser): JSX.Element => {
         <div className="px-4 py-2 rounded  absolute right-[20px] my-3 bg-primary-900 mt-32">
           <p
             className="text-white cursor-pointer hover:bg-white hover:text-black px-3 rounded-sm"
-            onClick={() => setHide(!hide)}
+            onClick={() => {
+              setHide(!hide);
+              navigate("/updateinfo");
+            }}
           >
             Profile
           </p>

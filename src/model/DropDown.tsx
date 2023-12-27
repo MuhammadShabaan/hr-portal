@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const DropDown = ({
@@ -9,20 +8,6 @@ const DropDown = ({
   selectedOption = "Select here",
   selectOption,
 }: any) => {
-  // const dropDownRef = useRef<any>(null);
-
-  // useEffect(() => {
-  //   const handleClickedOutside = (e: any) => {
-  //     if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
-  //       openDropDown(false);
-  //     }
-  //   };
-  //   document.addEventListener("click", handleClickedOutside);
-  //   return () => {
-  //     document.removeEventListener("click", handleClickedOutside);
-  //   };
-  // }, [dropDownRef, openDropDown]);
-
   return (
     <div className="my-4">
       <div
