@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
 import Suggestions from "./user/EmplSuggestion";
-import FetchAllData from "@/hooks/fetchAll";
 import useSWR from "swr";
 
 const SuggestionSection = () => {
