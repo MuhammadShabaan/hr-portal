@@ -4,7 +4,7 @@ import Button from "../../model/Button";
 import DropDown from "../../model/DropDown";
 import { CreateCertRequest } from "../../api/user";
 
-const EmpCertificateForm: React.FC = (): JSX.Element => {
+const EmpCertificateForm: React.FC = ({ hideForm }: any): JSX.Element => {
   const options = [
     { id: 1, text: "certificate" },
     { id: 2, text: "letter" },
@@ -37,6 +37,7 @@ const EmpCertificateForm: React.FC = (): JSX.Element => {
     if (certificate?.id) {
       setFormData({ title: "" });
       setSelectedCertificate("Select here");
+      hideForm();
     }
   };
 

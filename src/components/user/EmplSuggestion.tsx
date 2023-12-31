@@ -5,7 +5,7 @@ import DropDown from "../../model/DropDown";
 import TextArea from "../../model/TextArea";
 import { CreateUserSuggestion } from "@/api/user";
 
-const Suggestions: React.FC = (): JSX.Element => {
+const Suggestions: React.FC = ({ hideForm }: any): JSX.Element => {
   const options = [
     { id: 1, text: "complain" },
     { id: 2, text: "suggestion" },
@@ -42,6 +42,7 @@ const Suggestions: React.FC = (): JSX.Element => {
         description: "",
       });
       setSelectedSuggestion("Select here");
+      hideForm();
     }
   };
 

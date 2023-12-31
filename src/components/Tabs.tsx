@@ -54,6 +54,7 @@ const Tabs = () => {
             icon={<FaHome className="text-white" />}
             label="Dashboard"
             textColor="white"
+            to="/dashboard"
           />
           <TabButton
             icon={<FaTeamspeak className="text-white" />}

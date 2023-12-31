@@ -20,18 +20,18 @@ const CreateUserModal = ({ userRole, setHideUserModal }: any) => {
       </div>
       {hide && (
         <div className="absolute right-[12px] px-3 py-4 rounded my-3 bg-neutral-800 flex flex-col items-center justify-center gap-6">
-          {defaulUsers.map((user) => (
+          {defaulUsers.map(({ id, text }) => (
             <p
-              key={user.id}
+              key={id}
               className={` ${
-                userRole === user.text && "hidden"
+                userRole === text && "hidden"
               } text-white cursor-pointer hover:bg-white hover:text-black px-3 rounded-sm bg-primary-800`}
               onClick={() => {
                 setHide(!hide);
-                setHideUserModal(user.text);
+                setHideUserModal(text);
               }}
             >
-              New <span className="capitalize">{user.text}</span>
+              New <span className="capitalize">{text}</span>
             </p>
           ))}
         </div>

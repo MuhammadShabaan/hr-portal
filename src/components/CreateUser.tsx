@@ -77,7 +77,7 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
       employee_status: "",
       job_type: "",
       blood_group: "",
-      roles: selectedRole.text,
+      roles: selectedRole?.text,
     };
 
     const user = await pb

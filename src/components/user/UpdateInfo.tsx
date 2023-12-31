@@ -8,13 +8,13 @@ const UpdateInfo: React.FC = (): JSX.Element => {
   const { user, setUser }: any = useContext(UserContext);
 
   const [formData, setFormData] = useState<any>({
-    username: "",
-    name: "",
-    nic: "",
-    address: "",
-    phone: "",
-    emergency_phone: "",
-    blood_group: "",
+    username: user.username,
+    name: user.name,
+    nic: user.nic,
+    address: user.address,
+    phone: user.phone,
+    emergency_phone: user.emergency_phone,
+    blood_group: user.blood_group,
   });
 
   const createForm = (key: string, value: string): void => {
@@ -118,7 +118,7 @@ const UpdateInfo: React.FC = (): JSX.Element => {
           />
 
           <Button
-            label="Login"
+            label="Update"
             color={"primary-900"}
             disabled={false}
             onClick={handleSubmit}

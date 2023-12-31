@@ -2,21 +2,10 @@ import { useState } from "react";
 import EmpCertificateForm from "./user/EmpCertificateForm";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
-import useSWR from "swr";
+import AllCertificates from "./AllCertificates";
 
 const CertificateSection = () => {
   const [show, setShow] = useState<boolean>(false);
-  // const [userCertificates, setUserCertificates] = useState<any>([]);
-
-  const fetcher = async (url: string): Promise<any> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  };
-  const { data, error, isLoading } = useSWR(
-    `http://127.0.0.1:8090/api/collections/certificates/records`,
-    fetcher
-  );
 
   return (
     <div className="py-5 px-6">
@@ -30,17 +19,7 @@ const CertificateSection = () => {
             }}
           />
         </div>{" "}
-        <div>
-          {data?.items?.map((certificate: any) => (
-            <div
-              key={certificate.id}
-              className="flex items-center justify-between "
-            >
-              <p>{certificate.type}</p>
-              <p>{certificate.title}</p>
-            </div>
-          ))}
-        </div>
+        <AllCertificates />
       </div>
       {show && (
         <FormWrapper
@@ -48,7 +27,7 @@ const CertificateSection = () => {
             setShow(false);
           }}
         >
-          <EmpCertificateForm />
+          <EmpCertificateForm hideForm={() => setShow(false)} />
         </FormWrapper>
       )}
     </div>

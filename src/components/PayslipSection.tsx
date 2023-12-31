@@ -2,22 +2,10 @@ import { useState } from "react";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
 import EmployeePayslip from "./user/EmpPayslip";
-import useSWR from "swr";
+import AllPayslips from "./AllPayslips";
 
 const PayslipSection = () => {
   const [show, setShow] = useState<boolean>(false);
-
-  const fetcher = async (url: string): Promise<any> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  };
-  const { data, error, isLoading } = useSWR(
-    `http://127.0.0.1:8090/api/collections/payslips/records`,
-    fetcher
-  );
-
-  console.log("payslips", data?.items);
 
   return (
     <div className="py-5 px-6">
@@ -26,17 +14,7 @@ const PayslipSection = () => {
         <div className="flex items-center justify-end">
           <Button label="Request Ceretificate" onClick={() => setShow(!show)} />
         </div>{" "}
-        <div>
-          {data?.items?.map((payslip: any) => (
-            <div
-              key={payslip.id}
-              className="flex items-center justify-between "
-            >
-              <p>{payslip.allowance}</p>
-              <p>{payslip.basic_pay}</p>
-            </div>
-          ))}
-        </div>
+        <AllPayslips />
       </div>
       {show && (
         <FormWrapper onClick={() => setShow(!show)}>

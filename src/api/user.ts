@@ -19,7 +19,6 @@ const UserLogin = async (data: any): Promise<any> => {
 //<====================================== Get Requests ======================================>//
 
 const GetUserCertificates = async (): Promise<any> => {
-  console.log("here==>");
   const fetcher = async (url: string): Promise<any> => {
     const response = await fetch(url);
     const data = await response.json();
@@ -29,7 +28,6 @@ const GetUserCertificates = async (): Promise<any> => {
     "http://127.0.0.1:8090/api/collections/certificates/records",
     fetcher
   );
-  console.log("data in swr--->", data, error);
   return { data, error, isLoading };
 };
 
@@ -89,133 +87,151 @@ const CreateCertRequest = async (data: any): Promise<any> => {
 
 //<====================================== Delete Requests ======================================>//
 
-const DeleteUser = async (id: any): Promise<any> => {
+const DeleteUser = async (userId: any): Promise<any> => {
   const deletedUser = await pb
     .collection("users")
-    .delete(id)
+    .delete(userId)
     .then((result) => {
       if (result === null) {
-        return `User with id:${id} deleted successfully!`;
+        return `User with id:${userId} deleted successfully!`;
       }
     })
     .catch((error) => {
-      console.log(`Error while deleting the user of id:${id}`, error);
+      console.log(`Error while deleting the user of id:${userId}`, error);
     });
   return deletedUser;
 };
 
-const DeleteCertificate = async (id: any): Promise<any> => {
+const DeleteCertificate = async (certificateId: any): Promise<any> => {
   const deletedCertifcate = await pb
     .collection("certificates")
-    .delete(id)
+    .delete(certificateId)
     .then((result) => {
       if (result === null) {
-        return `Certificate with id:${id} deleted successfully!`;
+        return `Certificate with id:${certificateId} deleted successfully!`;
       }
     })
     .catch((error) => {
-      console.log(`Error while deleting the certificate of id:${id}`, error);
+      console.log(
+        `Error while deleting the certificate of id:${certificateId}`,
+        error
+      );
     });
   return deletedCertifcate;
 };
 
-const DeletePayslip = async (id: any): Promise<any> => {
+const DeleteUserPayslip = async (payslipId: any): Promise<any> => {
   const deletedPayslip = await pb
     .collection("payslips")
-    .delete(id)
+    .delete(payslipId)
     .then((result) => {
       if (result === null) {
-        return `Payslip with id:${id} deleted successfully!`;
+        return `Payslip with id:${payslipId} deleted successfully!`;
       }
     })
     .catch((error) => {
-      console.log(`Error while deleting the payslip of id:${id}`, error);
+      console.log(`Error while deleting the payslip of id:${payslipId}`, error);
     });
   return deletedPayslip;
 };
 
-const DeleteSuggestion = async (id: any): Promise<any> => {
+const DeleteUserSuggestion = async (suggestionId: any): Promise<any> => {
   const deletedSuggestion = await pb
-    .collection("payslips")
-    .delete(id)
+    .collection("suggestions")
+    .delete(suggestionId)
     .then((result) => {
       if (result === null) {
-        return `Suggestion with id:${id} deleted successfully!`;
+        return `Suggestion with id:${suggestionId} deleted successfully!`;
       }
     })
     .catch((error) => {
-      console.log(`Error while deleting the suggestion of id:${id}`, error);
+      console.log(
+        `Error while deleting the suggestion of id:${suggestionId}`,
+        error
+      );
     });
   return deletedSuggestion;
 };
 
-const DeleteUserAllowance = async (id: any): Promise<any> => {
+const DeleteUserAllowance = async (allowanceId: any): Promise<any> => {
   const deletedAllowance = await pb
     .collection("user_allowances")
-    .delete(id)
+    .delete(allowanceId)
     .then((result) => {
       if (result === null) {
-        return `Allowance with id:${id} deleted successfully!`;
+        return `Allowance with id:${allowanceId} deleted successfully!`;
       }
     })
     .catch((error) => {
-      console.log(`Error while deleting the allowance of id:${id}`, error);
+      console.log(
+        `Error while deleting the allowance of id:${allowanceId}`,
+        error
+      );
     });
   return deletedAllowance;
 };
 
-const DeleteUserRequest = async (id: any): Promise<any> => {
+const DeleteUserRequest = async (requestId: any): Promise<any> => {
   const deletedRequest = await pb
     .collection("user_requests")
-    .delete(id)
+    .delete(requestId)
     .then((result) => {
       if (result === null) {
-        return `Request with id:${id} deleted successfully!`;
+        return `Request with id:${requestId} deleted successfully!`;
       }
     })
     .catch((error) => {
-      console.log(`Error while deleting the request of id:${id}`, error);
+      console.log(`Error while deleting the request of id:${requestId}`, error);
     });
   return deletedRequest;
 };
 
 //<====================================== Update Requests ======================================>//
 
-const UpdateSuggestion = async (id: any, data: any): Promise<any> => {
+const UpdateSuggestion = async (suggestionId: any, data: any): Promise<any> => {
   const updatedSuggestion = await pb
     .collection("suggestions")
-    .update(id, data)
+    .update(suggestionId, data)
     .then((result) => {
       return result;
     })
     .catch((error) => {
-      console.log(`While while updating suggestion with id:${id}`, error);
+      console.log(
+        `While while updating suggestion with id:${suggestionId}`,
+        error
+      );
     });
   return updatedSuggestion;
 };
 
-const UpdateUserAllowance = async (id: any, data: any): Promise<any> => {
+const UpdateUserAllowance = async (
+  allowanceId: any,
+  data: any
+): Promise<any> => {
   const updatedAllowance = await pb
     .collection("user_allowances")
-    .update(id, data)
+    .update(allowanceId, data)
     .then((result) => {
       return result;
     })
     .catch((error) => {
-      console.log(`While while updating allowance with id:${id}`, error);
+      console.log(
+        `While while updating allowance with id:${allowanceId}`,
+        error
+      );
     });
   return updatedAllowance;
 };
 
-const UpdateUserRequest = async (id: any, data: any): Promise<any> => {
+const UpdateUserRequest = async (requestId: any, data: any): Promise<any> => {
   const updatedRequest = await pb
     .collection("user_requests")
-    .update(id, data)
+    .update(requestId, data)
     .then((result) => {
       return result;
     })
     .catch((error) => {
-      console.log(`While while updating request with id:${id}`, error);
+      console.log(`While while updating request with id:${requestId}`, error);
     });
   return updatedRequest;
 };
@@ -229,8 +245,8 @@ export {
   CreateCertRequest,
   DeleteUser,
   DeleteCertificate,
-  DeletePayslip,
-  DeleteSuggestion,
+  DeleteUserPayslip,
+  DeleteUserSuggestion,
   DeleteUserAllowance,
   DeleteUserRequest,
   UpdateSuggestion,
