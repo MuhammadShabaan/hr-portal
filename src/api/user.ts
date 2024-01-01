@@ -85,6 +85,19 @@ const CreateCertRequest = async (data: any): Promise<any> => {
   return certificate;
 };
 
+const CreateUserAllowance = async (data: any): Promise<any> => {
+  const allowance = await pb
+    .collection("user_allowances")
+    .create(data)
+    .then((result) => {
+      return result;
+    })
+    .catch((error) =>
+      console.log("Error while creating allowance request", error)
+    );
+  return allowance;
+};
+
 //<====================================== Delete Requests ======================================>//
 
 const DeleteUser = async (userId: any): Promise<any> => {
@@ -243,6 +256,7 @@ export {
   CreateUserRequest,
   UpdateUserInfo,
   CreateCertRequest,
+  CreateUserAllowance,
   DeleteUser,
   DeleteCertificate,
   DeleteUserPayslip,

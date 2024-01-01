@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
 import UserRequest from "./user/EmpRequest";
-import useSWR from "swr";
 import AllRequests from "./AllRequests";
 
 const RrequestSection = () => {

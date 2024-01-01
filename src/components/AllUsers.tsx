@@ -4,6 +4,8 @@ import Button from "@/model/Button";
 import { useContext } from "react";
 import { FaRemoveFormat } from "react-icons/fa";
 import useSWR from "swr";
+import { DataTable } from "./tables/DataTable";
+import { columns } from "./tables/usersTable/columns";
 
 const AllUsers = () => {
   const { user }: any = useContext(UserContext);
@@ -27,46 +29,11 @@ const AllUsers = () => {
 
   return (
     <div>
-      <p className="text-center">All Users</p>
-      {data?.items.map(
-        ({
-          name,
-          username,
-          email,
-          id,
-          nic,
-          pay,
-          roles,
-          phone,
-          emergency_phone,
-        }: any) => (
-          <div key={id} className="flex items-center justify-between mb-">
-            <p>{name}</p>
-            <p>{username}</p>
-            <p>{email}</p>
-            <p>{id}</p>
-            <p>{nic}</p>
-            <p>{pay}</p>
-            {user?.id === id ? (
-              <p className="bg-white text-black px-2 p-2 rounded-sm ">
-                {roles} <span className="text-red-900">(You)</span>
-              </p>
-            ) : (
-              <p>{roles}</p>
-            )}
-            <p>{phone}</p>
-            <p>{emergency_phone}</p>
-            {user?.id !== id && (
-              <div>
-                <Button
-                  icon={<FaRemoveFormat />}
-                  onClick={() => deleteUser(id)}
-                />
-              </div>
-            )}
-          </div>
-        )
-      )}
+      <DataTable
+        columns={columns}
+        data={data?.items || {}}
+        onClick={(id: string) => deleteUser(id)}
+      />
     </div>
   );
 };

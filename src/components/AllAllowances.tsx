@@ -2,6 +2,8 @@ import { DeleteUserAllowance } from "@/api/user";
 import Button from "@/model/Button";
 import { FaRemoveFormat } from "react-icons/fa";
 import useSWR from "swr";
+import { DataTable } from "./tables/DataTable";
+import { columns } from "./tables/AllowancesTable/columns";
 
 const AllAllowances = () => {
   const fetcher = async (url: string): Promise<any> => {
@@ -14,25 +16,20 @@ const AllAllowances = () => {
     fetcher
   );
   const deleteAllowance = async (allowanceId: any): Promise<any> => {
+    console.log("id==>", allowanceId);
     const deletedAllowance = await DeleteUserAllowance(allowanceId);
     if (deletedAllowance === undefined) {
       console.log(`Allowance with id:${allowanceId} deleted successfully!`);
     }
   };
+  console.log("data", data);
   return (
     <div>
-      {data?.items?.map(({ id, status }: any) => (
-        <div key={id} className="flex items-center justify-between mb-2">
-          <p>{id}</p>
-          <p>{status}</p>
-          <div>
-            <Button
-              icon={<FaRemoveFormat />}
-              onClick={() => deleteAllowance(id)}
-            />
-          </div>
-        </div>
-      ))}
+      <DataTable
+        columns={columns}
+        data={data?.items || {}}
+        onClick={(id: any) => deleteAllowance(id)}
+      />
     </div>
   );
 };

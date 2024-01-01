@@ -1,5 +1,3 @@
-"use client";
-
 import {
   ColumnDef,
   flexRender,
@@ -15,15 +13,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { RiDeleteBin2Line } from "react-icons/ri";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onClick: () => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onClick,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -53,7 +54,7 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {table?.getRowModel()?.rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
@@ -64,6 +65,12 @@ export function DataTable<TData, TValue>({
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
+                <div>
+                  <RiDeleteBin2Line
+                    className="text-red-800 cursor-pointer"
+                    onClick={() => onClick(row?.original?.id)}
+                  />
+                </div>
               </TableRow>
             ))
           ) : (

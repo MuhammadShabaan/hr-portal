@@ -6,12 +6,17 @@ import useSWR from "swr";
 import FormWrapper from "./FormWrapper";
 import UserRequest from "./user/EmpRequest";
 import { DeleteUserRequest } from "@/api/user";
+import { DataTable } from "./tables/DataTable";
+import { columns } from "./tables/requestsTable/columns";
 
 const AllRequests = () => {
   const { user }: any = useContext(UserContext);
 
   const [showEditModel, setShowEditModel] = useState<boolean>(false);
 
+  const [success, setSuccess] = useState<boolean>(false);
+
+  console.log("success", success);
   const [selectedRequestId, setSelectedRequestId] = useState<any>();
 
   const fetcher = async (url: string): Promise<any> => {
@@ -23,6 +28,7 @@ const AllRequests = () => {
     `http://127.0.0.1:8090/api/collections/user_requests/records`,
     fetcher
   );
+  console.log("request", data);
 
   const deteleRequest = async (requestId: any): Promise<any> => {
     const deletedRequest = await DeleteUserRequest(requestId);
@@ -37,34 +43,16 @@ const AllRequests = () => {
         <FormWrapper onClick={() => setShowEditModel(!showEditModel)}>
           <UserRequest
             selectedRequestId={selectedRequestId}
-            role={user.roles}
+            role={user?.roles}
           />
         </FormWrapper>
       )}
-      {data?.items?.map(
-        ({ id, description, status, request_type, note }: any) => (
-          <div key={id} className="flex items-center justify-between mb-2">
-            <p>{description}</p>
-            <p>{status}</p>
-            <p>{request_type}</p>
-            <p>{note}</p>
-            <div className="flex items-center justify-between">
-              <Button
-                icon={<FaEdit />}
-                onClick={() => {
-                  setShowEditModel(!showEditModel);
-                  setSelectedRequestId(id);
-                }}
-              />
-              <Button
-                icon={<FaRemoveFormat />}
-                color="red-800"
-                onClick={() => deteleRequest(id)}
-              />
-            </div>
-          </div>
-        )
-      )}
+
+      <DataTable
+        columns={columns}
+        data={data?.items || {}}
+        onClick={(id: string) => deteleRequest(id)}
+      />
     </div>
   );
 };

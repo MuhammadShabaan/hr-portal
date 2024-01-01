@@ -2,6 +2,8 @@ import { DeleteCertificate } from "@/api/user";
 import Button from "@/model/Button";
 import { FaRemoveFormat } from "react-icons/fa";
 import useSWR from "swr";
+import { DataTable } from "./tables/DataTable";
+import { columns } from "./tables/CertificatesTable/columns";
 
 const AllCertificates = () => {
   const fetcher = async (url: string): Promise<any> => {
@@ -20,9 +22,15 @@ const AllCertificates = () => {
       console.log(`Certificate with id:${certificateId} deleted successfully!`);
     }
   };
+
   return (
     <div>
-      {data?.items?.map(({ id, type, title }: any) => (
+      <DataTable
+        columns={columns}
+        data={data?.items || {}}
+        onClick={(id: string) => deleteCertificate(id)}
+      />
+      {/* {data?.items?.map(({ id, type, title }: any) => (
         <div key={id} className="flex items-center justify-between mb-2">
           <p>{type}</p>
           <p>{title}</p>
@@ -33,7 +41,7 @@ const AllCertificates = () => {
             />
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };

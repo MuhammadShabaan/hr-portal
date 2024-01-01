@@ -1,10 +1,12 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "../../model/Input";
 import Button from "../../model/Button";
 import DropDown from "../../model/DropDown";
 import { CreateCertRequest } from "../../api/user";
+import { UserContext } from "@/context/UserContext";
 
 const EmpCertificateForm: React.FC = ({ hideForm }: any): JSX.Element => {
+  const { user }: any = useContext(UserContext);
   const options = [
     { id: 1, text: "certificate" },
     { id: 2, text: "letter" },
@@ -30,6 +32,8 @@ const EmpCertificateForm: React.FC = ({ hideForm }: any): JSX.Element => {
     const data = {
       title: formData.title,
       type: selectedCertificate.text,
+      requested_by: user?.username,
+      user_email: user?.email,
     };
 
     const certificate = await CreateCertRequest(data);

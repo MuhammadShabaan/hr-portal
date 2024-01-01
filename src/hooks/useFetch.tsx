@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-const useFetchAllData = async (table: any): Promise<any> => {
+const useFetch = async (table: any): Promise<any> => {
   const fetcher = async (url: string): Promise<any> => {
     const response = await fetch(url);
     const data = await response.json();
@@ -14,4 +14,4 @@ const useFetchAllData = async (table: any): Promise<any> => {
   return { data, error, isLoading };
 };
 
-export default useFetchAllData;
+export default useFetch;

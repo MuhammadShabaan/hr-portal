@@ -29,7 +29,7 @@ const Board = ({ setHideUserModal, children }: any): JSX.Element => {
     navigate("/");
   };
   return (
-    <div className="bg-background-primary w-[80%]">
+    <div className="bg-background-primary w-[80%] ">
       <MenuDashboard logOutUser={() => logOutUser()} />
       {user?.roles === "employee" ? (
         <div className="flex items-center justify-center w-full mt-10">
@@ -44,7 +44,7 @@ const Board = ({ setHideUserModal, children }: any): JSX.Element => {
             />
           </div>
           {
-            <div className=" space-y-4">
+            <div className=" space-y-4 px-5">
               <AllUsers />
               <div>
                 <p className="text-center">Users Requests</p>

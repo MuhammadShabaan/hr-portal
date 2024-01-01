@@ -55,8 +55,10 @@ const UserRequest: React.FC = ({
     e.preventDefault();
 
     const data = {
-      user_id: user?.user_id,
-      request_type: selectedRequest.text,
+      user_id: user?.id,
+      requested_by: user?.username,
+      user_email: user?.email,
+      request_type: selectedRequest?.text,
       description: formData.description,
       status: formData.status,
     };
