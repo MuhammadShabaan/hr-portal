@@ -14,17 +14,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onClick: () => void;
+  handleDelete: () => void;
+  handleEdit: () => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  onClick,
+  handleDelete,
+  handleEdit,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -65,10 +68,14 @@ export function DataTable<TData, TValue>({
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
-                <div>
+                <div className="flex items-center justify-center gap-3">
                   <RiDeleteBin2Line
                     className="text-red-800 cursor-pointer"
-                    onClick={() => onClick(row?.original?.id)}
+                    onClick={() => handleDelete(row?.original?.id)}
+                  />
+                  <FaEdit
+                    className="text-green-400 cursor-pointer"
+                    onClick={() => handleEdit(row?.original)}
                   />
                 </div>
               </TableRow>

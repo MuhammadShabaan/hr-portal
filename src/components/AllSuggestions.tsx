@@ -3,9 +3,16 @@ import Button from "@/model/Button";
 import { FaEdit, FaRemoveFormat } from "react-icons/fa";
 import useSWR from "swr";
 import { DataTable } from "./tables/DataTable";
-import { columns } from "./tables/CertificatesTable/columns";
+import { columns } from "./tables/SuggestionTable/columns";
+import { useState } from "react";
+import FormWrapper from "./FormWrapper";
+import Suggestions from "./user/EmplSuggestion";
 
-const AllSuggestions = () => {
+const AllSuggestions = ({ role }: any) => {
+  const [showFrom, setShowForm] = useState<boolean>(false);
+  const [suggestionToUpdate, setSuggestionToUpdate] = useState<any>({});
+
+  console.log("showfrom", showFrom);
   const fetcher = async (url: string): Promise<any> => {
     const response = await fetch(url);
     const data = await response.json();
@@ -21,13 +28,24 @@ const AllSuggestions = () => {
       console.log(`Suggestion with id:${suggestionId} deleted successfully!`);
     }
   };
+
   return (
     <div>
-      <DataTable
-        columns={columns}
-        data={data?.items || {}}
-        onClick={(id: string) => deleteSuggestion(id)}
-      />
+      {showFrom ? (
+        <FormWrapper onClick={() => setShowForm(!showFrom)}>
+          <Suggestions role={role} suggestionToUpdate={suggestionToUpdate} />
+        </FormWrapper>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data?.items || {}}
+          handleDelete={(id: string) => deleteSuggestion(id)}
+          handleEdit={(sugeestion) => {
+            setSuggestionToUpdate(sugeestion);
+            setShowForm(!showFrom);
+          }}
+        />
+      )}
     </div>
   );
 };

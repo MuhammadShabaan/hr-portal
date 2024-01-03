@@ -18,6 +18,8 @@ interface HideModal {
 const Board = ({ setHideUserModal, children }: any): JSX.Element => {
   const { user, setUser }: any = useContext(UserContext);
 
+  const role = user?.roles;
+
   const pb = new PocketBase("http://127.0.0.1:8090");
 
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const Board = ({ setHideUserModal, children }: any): JSX.Element => {
     setUser({});
     navigate("/");
   };
+
   return (
     <div className="bg-background-primary w-[80%] ">
       <MenuDashboard logOutUser={() => logOutUser()} />
@@ -64,7 +67,7 @@ const Board = ({ setHideUserModal, children }: any): JSX.Element => {
               </div>
               <div>
                 <p className="text-center">Users All Suggestions</p>
-                <AllSuggestions />
+                <AllSuggestions role={role} />
               </div>
             </div>
           }

@@ -201,7 +201,10 @@ const DeleteUserRequest = async (requestId: any): Promise<any> => {
 
 //<====================================== Update Requests ======================================>//
 
-const UpdateSuggestion = async (suggestionId: any, data: any): Promise<any> => {
+const UpdateUserSuggestion = async (
+  suggestionId: any,
+  data: any
+): Promise<any> => {
   const updatedSuggestion = await pb
     .collection("suggestions")
     .update(suggestionId, data)
@@ -263,7 +266,7 @@ export {
   DeleteUserSuggestion,
   DeleteUserAllowance,
   DeleteUserRequest,
-  UpdateSuggestion,
+  UpdateUserSuggestion,
   UpdateUserAllowance,
   UpdateUserRequest,
 };
