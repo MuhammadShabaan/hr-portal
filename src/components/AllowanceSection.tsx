@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
-import EmployeeAllowance from "./user/EmpAllowance";
-import AllAllowances from "./AllAllowances";
+import AllowanceFrom from "./forms/userForms/AllowanceForm";
+import AllAllowances from "./tables/userTables/AllowancesTable";
 
 const AllowanceSection = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -18,7 +18,7 @@ const AllowanceSection = () => {
       </div>
       {show && (
         <FormWrapper onClick={() => setShow(!show)}>
-          <EmployeeAllowance />
+          <AllowanceFrom />
         </FormWrapper>
       )}
     </div>

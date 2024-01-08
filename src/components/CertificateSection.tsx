@@ -1,8 +1,8 @@
 import { useState } from "react";
-import EmpCertificateForm from "./user/EmpCertificateForm";
+import CertificateForm from "./forms/userForms/CertificateForm";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
-import AllCertificates from "./AllCertificates";
+import AllCertificates from "./tables/userTables/CertificatesTable";
 
 const CertificateSection = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -27,7 +27,7 @@ const CertificateSection = () => {
             setShow(false);
           }}
         >
-          <EmpCertificateForm hideForm={() => setShow(false)} />
+          <CertificateForm hideForm={() => setShow(false)} />
         </FormWrapper>
       )}
     </div>

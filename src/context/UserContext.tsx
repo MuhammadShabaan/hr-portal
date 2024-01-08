@@ -4,7 +4,7 @@ import { User } from "../types/Types";
 export const UserContext = React.createContext();
 
 const LoggedInUserContext = ({ children }: any) => {
-  const [user, setUser] = useState<User | undefined>();
+  const [user, setUser] = useState<User | undefined>(undefined);
 
   console.log("user==>", user);
 

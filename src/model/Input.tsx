@@ -13,7 +13,6 @@ const Input = ({
 
   const ValLength = value.length != 0 ? true : false;
 
-  console.log(label);
   return (
     <div className="mb-3 sm:mb-6">
       <label

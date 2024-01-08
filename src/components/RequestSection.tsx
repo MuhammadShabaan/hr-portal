@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
-import UserRequest from "./user/EmpRequest";
-import AllRequests from "./AllRequests";
+import UserRequest from "./forms/userForms/RequestForm";
+import AllRequests from "./tables/userTables/RequestsTable";
 
 const RrequestSection = () => {
   const [show, setShow] = useState<boolean>(false);

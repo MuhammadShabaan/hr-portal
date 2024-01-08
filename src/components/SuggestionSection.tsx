@@ -1,9 +1,5 @@
-import { useState } from "react";
 import Button from "../model/Button";
-import FormWrapper from "./FormWrapper";
-import Suggestions from "./user/EmplSuggestion";
-import useSWR from "swr";
-import AllSuggestions from "./AllSuggestions";
+import AllSuggestions from "./tables/userTables/SuggestionsTable";
 
 const SuggestionSection = () => {
   return (

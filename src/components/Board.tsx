@@ -5,12 +5,12 @@ import CreateUserModal from "./CreateUserModal";
 import PocketBase from "pocketbase";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
-import AllUsers from "./AllUsers";
-import AllRequests from "./AllRequests";
-import AllAllowances from "./AllAllowances";
-import AllCertificates from "./AllCertificates";
-import AllPayslips from "./AllPayslips";
-import AllSuggestions from "./AllSuggestions";
+import AllUsers from "./tables/userTables/UsersTable";
+import AllRequests from "./tables/userTables/RequestsTable";
+import AllAllowances from "./tables/userTables/AllowancesTable";
+import AllCertificates from "./tables/userTables/CertificatesTable";
+import AllPayslips from "./tables/userTables/PayslipsTable";
+import AllSuggestions from "./tables/userTables/SuggestionsTable";
 
 interface HideModal {
   setHideUserModal(): void;
@@ -33,7 +33,7 @@ const Board = ({ setHideUserModal, children }: any): JSX.Element => {
 
   return (
     <div className="bg-background-primary w-[80%] ">
-      <MenuDashboard logOutUser={() => logOutUser()} />
+      <MenuDashboard logOutUser={logOutUser} />
       {user?.roles === "employee" ? (
         <div className="flex items-center justify-center w-full mt-10">
           {children}

@@ -1,20 +1,15 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Router,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import UpdateInfo from "./components/user/UpdateInfo";
+
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
 import CertificateSection from "./components/CertificateSection";
 import PayslipSection from "./components/PayslipSection";
 import SuggestionSection from "./components/SuggestionSection";
 import AllowanceSection from "./components/AllowanceSection";
-import RrequestSection from "./components/RequestSection";
+import RequestSection from "./components/RequestSection";
+import InfoUpdateForm from "./components/forms/userForms/InfoUpdateForm";
 
 // const AuthWrapper = ({ children }: any) => {
 //   const navigate = useNavigate();
@@ -36,12 +31,12 @@ function App() {
       {user ? (
         <Dashboard>
           <Routes>
-            <Route path="/updateinfo" element={<UpdateInfo />} />
+            <Route path="/updateinfo" element={<InfoUpdateForm />} />
             <Route path="/certificates" element={<CertificateSection />} />
             <Route path="/payslip" element={<PayslipSection />} />
             <Route path="/suggestions" element={<SuggestionSection />} />
             <Route path="/allowances" element={<AllowanceSection />} />
-            <Route path="/requests" element={<RrequestSection />} />
+            <Route path="/requests" element={<RequestSection />} />
           </Routes>
         </Dashboard>
       ) : (

@@ -1,9 +1,22 @@
-import Pocketbase from "pocketbase";
-import useSWR from "swr";
+import {
+  CreateAllowance,
+  CreateCertificate,
+  CreateRequest,
+  CreateSuggestion,
+  Login,
+  UpdateRequest,
+  UpdateSuggestion,
+  UpdateUser,
+} from "@/types/Types";
+import Pocketbase, { RecordAuthResponse, RecordModel } from "pocketbase";
 
 const pb = new Pocketbase("http://127.0.0.1:8090");
 
-const UserLogin = async (data: any): Promise<any> => {
+//<====================================== User Authentication ======================================>//
+
+const UserLogin = async (
+  data: Login
+): Promise<RecordAuthResponse<RecordModel> | void> => {
   const user = await pb
     .collection("users")
     .authWithPassword(data.email, data.password)
@@ -16,37 +29,11 @@ const UserLogin = async (data: any): Promise<any> => {
   return user;
 };
 
-//<====================================== Get Requests ======================================>//
-
-const GetUserCertificates = async (): Promise<any> => {
-  const fetcher = async (url: string): Promise<any> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  };
-  const { data, error, isLoading } = useSWR(
-    "http://127.0.0.1:8090/api/collections/certificates/records",
-    fetcher
-  );
-  return { data, error, isLoading };
-};
-
 //<====================================== Create Requests ======================================>//
 
-const UpdateUserInfo = async (userId: any, data: any): Promise<any> => {
-  const updatedUser = await pb
-    .collection("users")
-    .update(userId, data)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      console.log("Erro while updating user information", error);
-    });
-  return updatedUser;
-};
-
-const CreateUserSuggestion = async (data: any): Promise<any> => {
+const CreateUserSuggestion = async (
+  data: CreateSuggestion
+): Promise<RecordModel | void> => {
   const suggestion = await pb
     .collection("suggestions")
     .create(data)
@@ -59,7 +46,9 @@ const CreateUserSuggestion = async (data: any): Promise<any> => {
   return suggestion;
 };
 
-const CreateUserRequest = async (data: any): Promise<any> => {
+const CreateUserRequest = async (
+  data: CreateRequest
+): Promise<RecordModel | void> => {
   const request = await pb
     .collection("user_requests")
     .create(data)
@@ -72,7 +61,9 @@ const CreateUserRequest = async (data: any): Promise<any> => {
   return request;
 };
 
-const CreateCertRequest = async (data: any): Promise<any> => {
+const CreateUserCertificate = async (
+  data: CreateCertificate
+): Promise<RecordModel | void> => {
   const certificate = await pb
     .collection("certificates")
     .create(data)
@@ -85,7 +76,9 @@ const CreateCertRequest = async (data: any): Promise<any> => {
   return certificate;
 };
 
-const CreateUserAllowance = async (data: any): Promise<any> => {
+const CreateUserAllowance = async (
+  data: CreateAllowance
+): Promise<RecordModel | void> => {
   const allowance = await pb
     .collection("user_allowances")
     .create(data)
@@ -100,7 +93,9 @@ const CreateUserAllowance = async (data: any): Promise<any> => {
 
 //<====================================== Delete Requests ======================================>//
 
-const DeleteUser = async (userId: any): Promise<any> => {
+const DeleteUser = async (
+  userId: string
+): Promise<string | void | undefined> => {
   const deletedUser = await pb
     .collection("users")
     .delete(userId)
@@ -115,7 +110,9 @@ const DeleteUser = async (userId: any): Promise<any> => {
   return deletedUser;
 };
 
-const DeleteCertificate = async (certificateId: any): Promise<any> => {
+const DeleteCertificate = async (
+  certificateId: string
+): Promise<string | void | undefined> => {
   const deletedCertifcate = await pb
     .collection("certificates")
     .delete(certificateId)
@@ -133,7 +130,9 @@ const DeleteCertificate = async (certificateId: any): Promise<any> => {
   return deletedCertifcate;
 };
 
-const DeleteUserPayslip = async (payslipId: any): Promise<any> => {
+const DeleteUserPayslip = async (
+  payslipId: string
+): Promise<string | void | undefined> => {
   const deletedPayslip = await pb
     .collection("payslips")
     .delete(payslipId)
@@ -148,12 +147,14 @@ const DeleteUserPayslip = async (payslipId: any): Promise<any> => {
   return deletedPayslip;
 };
 
-const DeleteUserSuggestion = async (suggestionId: any): Promise<any> => {
+const DeleteUserSuggestion = async (
+  suggestionId: string
+): Promise<string | void | undefined> => {
   const deletedSuggestion = await pb
     .collection("suggestions")
     .delete(suggestionId)
     .then((result) => {
-      if (result === null) {
+      if (result === null || result === undefined) {
         return `Suggestion with id:${suggestionId} deleted successfully!`;
       }
     })
@@ -166,7 +167,9 @@ const DeleteUserSuggestion = async (suggestionId: any): Promise<any> => {
   return deletedSuggestion;
 };
 
-const DeleteUserAllowance = async (allowanceId: any): Promise<any> => {
+const DeleteUserAllowance = async (
+  allowanceId: string
+): Promise<string | void | undefined> => {
   const deletedAllowance = await pb
     .collection("user_allowances")
     .delete(allowanceId)
@@ -184,7 +187,9 @@ const DeleteUserAllowance = async (allowanceId: any): Promise<any> => {
   return deletedAllowance;
 };
 
-const DeleteUserRequest = async (requestId: any): Promise<any> => {
+const DeleteUserRequest = async (
+  requestId: string
+): Promise<string | void | undefined> => {
   const deletedRequest = await pb
     .collection("user_requests")
     .delete(requestId)
@@ -201,10 +206,26 @@ const DeleteUserRequest = async (requestId: any): Promise<any> => {
 
 //<====================================== Update Requests ======================================>//
 
+const UpdateUserInfo = async (
+  userId: string,
+  data: UpdateUser
+): Promise<RecordModel | void> => {
+  const updatedUser = await pb
+    .collection("users")
+    .update(userId, data)
+    .then((result) => {
+      return result;
+    })
+    .catch((error) => {
+      console.log("Erro while updating user information", error);
+    });
+  return updatedUser;
+};
+
 const UpdateUserSuggestion = async (
-  suggestionId: any,
-  data: any
-): Promise<any> => {
+  suggestionId: string,
+  data: UpdateSuggestion
+): Promise<RecordModel | void> => {
   const updatedSuggestion = await pb
     .collection("suggestions")
     .update(suggestionId, data)
@@ -221,9 +242,9 @@ const UpdateUserSuggestion = async (
 };
 
 const UpdateUserAllowance = async (
-  allowanceId: any,
+  allowanceId: string,
   data: any
-): Promise<any> => {
+): Promise<RecordModel | void> => {
   const updatedAllowance = await pb
     .collection("user_allowances")
     .update(allowanceId, data)
@@ -239,7 +260,10 @@ const UpdateUserAllowance = async (
   return updatedAllowance;
 };
 
-const UpdateUserRequest = async (requestId: any, data: any): Promise<any> => {
+const UpdateUserRequest = async (
+  requestId: string,
+  data: UpdateRequest
+): Promise<RecordModel | void> => {
   const updatedRequest = await pb
     .collection("user_requests")
     .update(requestId, data)
@@ -254,11 +278,10 @@ const UpdateUserRequest = async (requestId: any, data: any): Promise<any> => {
 
 export {
   UserLogin,
-  GetUserCertificates,
   CreateUserSuggestion,
   CreateUserRequest,
   UpdateUserInfo,
-  CreateCertRequest,
+  CreateUserCertificate,
   CreateUserAllowance,
   DeleteUser,
   DeleteCertificate,

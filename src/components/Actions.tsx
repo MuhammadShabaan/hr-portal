@@ -1,4 +1,3 @@
-import React from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 
 const Actions = ({ onClick }: any) => {

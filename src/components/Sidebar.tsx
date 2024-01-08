@@ -1,4 +1,4 @@
-import ProfileInfo from "./user/ProfileInfo";
+import ProfileInfo from "./ProfileInfo";
 import Tabs from "./Tabs";
 
 const Sidebar = () => {

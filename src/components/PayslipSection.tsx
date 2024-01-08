@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Button from "../model/Button";
 import FormWrapper from "./FormWrapper";
-import EmployeePayslip from "./user/EmpPayslip";
-import AllPayslips from "./AllPayslips";
+import EmployeePayslip from "./EmployeePayslip";
+import AllPayslips from "./tables/userTables/PayslipsTable";
 
 const PayslipSection = () => {
   const [show, setShow] = useState<boolean>(false);
