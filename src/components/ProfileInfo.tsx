@@ -6,7 +6,7 @@ const ProfileInfo = () => {
   const { user }: any = useContext(UserContext);
   const userName = user?.username;
   const userEmail = user?.email;
-  const userRole = user?.roles;
+  const userRole = user?.role;
   const avatar = user?.avatar;
   const userId = user?.id;
   const avatarUrl = `http://127.0.0.1:8090/api/files/users/${userId}/${avatar}`;

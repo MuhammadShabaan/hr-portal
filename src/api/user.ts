@@ -4,7 +4,7 @@ import {
   CreateRequest,
   CreateSuggestion,
   Login,
-  UpdateRequest,
+  UpdateUserRequest,
   UpdateSuggestion,
   UpdateUser,
 } from "@/types/Types";
@@ -201,6 +201,7 @@ const DeleteUserRequest = async (
     .catch((error) => {
       console.log(`Error while deleting the request of id:${requestId}`, error);
     });
+
   return deletedRequest;
 };
 
@@ -217,7 +218,7 @@ const UpdateUserInfo = async (
       return result;
     })
     .catch((error) => {
-      console.log("Erro while updating user information", error);
+      console.log("Error while updating user information", error);
     });
   return updatedUser;
 };
@@ -234,7 +235,7 @@ const UpdateUserSuggestion = async (
     })
     .catch((error) => {
       console.log(
-        `While while updating suggestion with id:${suggestionId}`,
+        `Error while updating suggestion with id:${suggestionId}`,
         error
       );
     });
@@ -253,7 +254,7 @@ const UpdateUserAllowance = async (
     })
     .catch((error) => {
       console.log(
-        `While while updating allowance with id:${allowanceId}`,
+        `Error while updating allowance with id:${allowanceId}`,
         error
       );
     });
@@ -262,7 +263,7 @@ const UpdateUserAllowance = async (
 
 const UpdateUserRequest = async (
   requestId: string,
-  data: UpdateRequest
+  data: any
 ): Promise<RecordModel | void> => {
   const updatedRequest = await pb
     .collection("user_requests")
@@ -271,16 +272,35 @@ const UpdateUserRequest = async (
       return result;
     })
     .catch((error) => {
-      console.log(`While while updating request with id:${requestId}`, error);
+      console.log(`Error while updating request with id:${requestId}`, error);
     });
+
   return updatedRequest;
+};
+
+const UpdateUserCertificate = async (
+  certificateId: string,
+  data: any
+): Promise<RecordModel | void> => {
+  const updatedCertificate = await pb
+    .collection("certificates")
+    .update(certificateId, data)
+    .then((result) => {
+      return result;
+    })
+    .catch((error) => {
+      console.log(
+        `Error while updating certificate with id:${certificateId}`,
+        error
+      );
+    });
+  return updatedCertificate;
 };
 
 export {
   UserLogin,
   CreateUserSuggestion,
   CreateUserRequest,
-  UpdateUserInfo,
   CreateUserCertificate,
   CreateUserAllowance,
   DeleteUser,
@@ -289,7 +309,9 @@ export {
   DeleteUserSuggestion,
   DeleteUserAllowance,
   DeleteUserRequest,
+  UpdateUserInfo,
   UpdateUserSuggestion,
   UpdateUserAllowance,
   UpdateUserRequest,
+  UpdateUserCertificate,
 };

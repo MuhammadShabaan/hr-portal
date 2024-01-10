@@ -14,7 +14,7 @@ const Tabs = () => {
 
   return (
     <div className="space-y-3">
-      {user?.roles === "employee" ? (
+      {user?.role === "employee" ? (
         <>
           <TabButton
             icon={<FaHome className="text-white" />}

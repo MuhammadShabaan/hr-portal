@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { User } from "../types/Types";
+import { User, UserContextProps } from "../types/Types";
 
-export const UserContext = React.createContext();
+export const UserContext = React.createContext<UserContextProps | undefined>(
+  undefined
+);
 
 const LoggedInUserContext = ({ children }: any) => {
   const [user, setUser] = useState<User | undefined>(undefined);
-
-  console.log("user==>", user);
 
   useEffect(() => {
     let loggedInUser: User | null = JSON.parse(

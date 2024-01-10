@@ -7,8 +7,9 @@ import TextArea from "../../../model/TextArea";
 import { CreateRequest, UpdateRequest } from "@/types/Types";
 
 const RequestForm: React.FC = ({
-  selectedRequestId,
+  requestToUpdate,
   role,
+  hideForm,
 }: any): JSX.Element => {
   const options = [
     { id: 1, text: "leave" },
@@ -70,16 +71,22 @@ const RequestForm: React.FC = ({
     };
 
     const request =
-      role === "manager"
-        ? await UpdateUserRequest(selectedRequestId, updatedData)
-        : await CreateUserRequest(data);
-
+      role === "employee"
+        ? await CreateUserRequest(data)
+        : await UpdateUserRequest(requestToUpdate?.id, updatedData);
+    note: "";
     if (request?.id) {
-      setFormData({
-        description: "",
-        status: "pending",
-      });
-      setSelectedRequest("Select request type");
+      if (role === "employee") {
+        setFormData({
+          description: "",
+          status: "pending",
+        });
+        setSelectedRequest("Select request type");
+        hideForm();
+      } else {
+        setUpdateFormData({ note: "" });
+        hideForm();
+      }
     }
   };
 
@@ -92,34 +99,34 @@ const RequestForm: React.FC = ({
         <form onSubmit={handleSubmit}>
           <DropDown
             isOpen={isOpen}
-            options={role === "manager" ? status : options}
+            options={role === "employee" ? options : status}
             openDropDown={() => setIsOpen(!isOpen)}
             selectedOption={
-              role === "manager" ? selectedStatus : selectedRequest
+              role === "employee" ? selectedRequest : selectedStatus
             }
             selectOption={
-              role === "manager"
-                ? (option: any) => setSelectedStatus(option)
-                : (option: any) => setSelectedRequest(option)
+              role === "employee"
+                ? (option: any) => setSelectedRequest(option)
+                : (option: any) => setSelectedStatus(option)
             }
           />
 
           <TextArea
-            label={role === "manager" ? "Note For Employee" : "Description"}
+            label={role === "employee" ? "Description" : "Note For Employee"}
             value={
-              role === "manager" ? updateFormData.note : formData.description
+              role === "employee" ? formData.description : updateFormData.note
             }
             onChange={
-              role === "manager"
+              role === "employee"
                 ? (e: ChangeEvent<HTMLInputElement>) =>
-                    updateForm("note", e.target.value)
-                : (e: ChangeEvent<HTMLInputElement>) =>
                     createForm("description", e.target.value)
+                : (e: ChangeEvent<HTMLInputElement>) =>
+                    updateForm("note", e.target.value)
             }
           />
 
           <Button
-            label={role === "manager" ? "Update" : "Request"}
+            label={role === "employee" ? "Request" : "Update"}
             color={"primary-900"}
             disabled={false}
             onClick={handleSubmit}

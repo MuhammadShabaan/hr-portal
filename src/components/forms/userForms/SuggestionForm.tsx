@@ -9,6 +9,7 @@ import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
 const SuggestionForm: React.FC = ({
   role,
   suggestionToUpdate,
+  hideForm,
 }: any): JSX.Element => {
   console.log("role", role);
   const options = [
@@ -59,22 +60,28 @@ const SuggestionForm: React.FC = ({
     };
 
     const suggestion =
-      role === "manager"
-        ? await UpdateUserSuggestion(suggestionToUpdate.id, updateData)
-        : await CreateUserSuggestion(data);
+      role === "employee"
+        ? await CreateUserSuggestion(data)
+        : await UpdateUserSuggestion(suggestionToUpdate.id, updateData);
 
     if (suggestion?.id) {
-      setFormData({
-        description: "",
-      });
-      setSelectedSuggestion("Select here");
+      if (role === "employee") {
+        setFormData({
+          description: "",
+        });
+        setSelectedSuggestion("Select here");
+        hideForm();
+      } else {
+        setAddNote({ response: "" });
+        hideForm();
+      }
     }
   };
 
   return (
     <div className="bg-neutral-200 rounded-md py-3 md:py-6 w-[542px] h-[600px] md:px-10 px-3 space-y-24 overflow-y-auto">
       <p className="text-center text-h1b md:text-h3r capitalize">
-        {role === "manager" ? "Responsd to Employee Suggestion" : "Sugeestion"}
+        {role === "employee" ? "Sugeestion" : "Responsd to Employee Suggestion"}
       </p>
       <div className="space-y-5">
         <form onSubmit={handleSubmit}>
@@ -95,19 +102,21 @@ const SuggestionForm: React.FC = ({
             </div>
           )}
           <TextArea
-            label={role === "manager" ? "Add Note" : "Description"}
-            value={role === "manager" ? addNote.response : formData.description}
+            label={role === "employee" ? "Add Note" : "Description"}
+            value={
+              role === "employee" ? formData.description : addNote.response
+            }
             onChange={
-              role === "manager"
+              role === "employee"
                 ? (e: ChangeEvent<HTMLInputElement>) =>
-                    updateForm("response", e.target.value)
-                : (e: ChangeEvent<HTMLInputElement>) =>
                     createForm("description", e.target.value)
+                : (e: ChangeEvent<HTMLInputElement>) =>
+                    updateForm("response", e.target.value)
             }
           />
 
           <Button
-            label={role === "manager" ? "Update" : "Send"}
+            label={role === "employee" ? "Send" : "Update"}
             color={"primary-900"}
             disabled={false}
             onClick={handleSubmit}

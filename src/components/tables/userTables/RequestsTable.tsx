@@ -7,13 +7,18 @@ import { DataTable } from "../dataTable/DataTable";
 import { RequestsColumns } from "../dataTableColumns/RequestsColumn";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
+import RequestForm from "../../../components/forms/userForms/RequestForm";
+import { UserRequest } from "@/types/Types";
+import Button from "@/model/Button";
 // import { UserRequest } from "@/types/Types";
 
 const AllRequests: React.FC = (): JSX.Element => {
   const { user }: any = useContext(UserContext);
-  const [showEditModel, setShowEditModel] = useState<boolean>(false);
-  const [selectedRequestId, setSelectedRequestId] = useState<string>("");
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [requestToUpdate, setRequestToUpdate] = useState<any>();
   const { toast } = useToast();
+
+  const role: string = user?.role;
 
   const fetcher = async (url: string): Promise<UserRequest[] | undefined> => {
     const response = await fetch(url);
@@ -29,6 +34,8 @@ const AllRequests: React.FC = (): JSX.Element => {
     `http://127.0.0.1:8090/api/collections/user_requests/records`,
     fetcher
   );
+
+  const requestsColumns = RequestsColumns(role);
 
   const deteleRequest = async (requestId: string): Promise<void> => {
     const deletedRequest = await DeleteUserRequest(requestId);
@@ -48,19 +55,29 @@ const AllRequests: React.FC = (): JSX.Element => {
   return (
     <div>
       <Toaster />
-      {showEditModel && (
-        <FormWrapper onClick={(): void => setShowEditModel(!showEditModel)}>
-          <UserRequest
-            selectedRequestId={selectedRequestId}
-            role={user?.roles}
+      {role === "employee" && (
+        <div className="flex items-center justify-end">
+          <Button label="Send Request" onClick={() => setShowForm(!showForm)} />
+        </div>
+      )}
+      {showForm && (
+        <FormWrapper onClick={(): void => setShowForm(!showForm)}>
+          <RequestForm
+            requestToUpdate={requestToUpdate}
+            role={role}
+            hideForm={() => setShowForm(!showForm)}
           />
         </FormWrapper>
       )}
 
       <DataTable
-        columns={RequestsColumns}
+        columns={requestsColumns}
         data={requests || {}}
-        onClick={(id: string) => deteleRequest(id)}
+        handleDelete={(id: string) => deteleRequest(id)}
+        handleEdit={(request) => {
+          setRequestToUpdate(request);
+          setShowForm(!showForm);
+        }}
       />
     </div>
   );

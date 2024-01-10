@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/table";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
+import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,6 +36,9 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const { user }: any = useContext(UserContext);
+  const role = user?.role;
 
   return (
     <div className="rounded-md border">
@@ -73,10 +78,12 @@ export function DataTable<TData, TValue>({
                     className="text-red-800 cursor-pointer"
                     onClick={() => handleDelete(row?.original?.id)}
                   />
-                  <FaEdit
-                    className="text-green-400 cursor-pointer"
-                    onClick={() => handleEdit(row?.original)}
-                  />
+                  {role !== "employee" && (
+                    <FaEdit
+                      className="text-green-400 cursor-pointer"
+                      onClick={() => handleEdit(row?.original)}
+                    />
+                  )}
                 </div>
               </TableRow>
             ))

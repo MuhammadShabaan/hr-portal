@@ -67,7 +67,6 @@ const PayslipForm = ({ hideForm }: any) => {
               createForm("description", e.target.value)
             }
           />
-
           <Button
             label="Apply"
             color={"primary-900"}

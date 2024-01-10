@@ -18,7 +18,7 @@ interface HideModal {
 const Board = ({ setHideUserModal, children }: any): JSX.Element => {
   const { user, setUser }: any = useContext(UserContext);
 
-  const role = user?.roles;
+  const role = user?.role;
 
   const pb = new PocketBase("http://127.0.0.1:8090");
 
@@ -34,7 +34,7 @@ const Board = ({ setHideUserModal, children }: any): JSX.Element => {
   return (
     <div className="bg-background-primary w-[80%] ">
       <MenuDashboard logOutUser={logOutUser} />
-      {user?.roles === "employee" ? (
+      {user?.role === "employee" ? (
         <div className="flex items-center justify-center w-full mt-10">
           {children}
         </div>
@@ -43,7 +43,7 @@ const Board = ({ setHideUserModal, children }: any): JSX.Element => {
           <div className="flex justify-end px-3 py-5">
             <CreateUserModal
               setHideUserModal={setHideUserModal}
-              userRole={user?.roles}
+              userRole={user?.role}
             />
           </div>
           {

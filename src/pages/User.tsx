@@ -24,7 +24,7 @@ const User = () => {
 
   const [formData, setFormData] = useState<any>({
     email: "",
-    roles: "",
+    role: "",
   });
 
   const createForm = (key: any, value: any) => {
@@ -56,7 +56,7 @@ const User = () => {
       employee_status: "",
       job_type: "",
       blood_group: "",
-      roles: selectedRole.text,
+      role: selectedRole.text,
     };
 
     const user = await pb
@@ -82,7 +82,7 @@ const User = () => {
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <div className="">
-        <p>{user.roles} page</p>
+        <p>{user.role} page</p>
         <form onSubmit={handleSubmit}>
           <Input
             label="Email"

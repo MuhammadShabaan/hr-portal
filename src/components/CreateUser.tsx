@@ -13,26 +13,26 @@ interface role {
 
 interface FormData {
   email: string;
-  roles: string;
+  role: string;
 }
 
 const CreateUser = ({ setHideUserModal, userType }: any) => {
   const { user }: any = useContext(UserContext);
 
-  const defaulRoles = [
+  const defaulrole = [
     { id: 1, text: "admin" },
     { id: 2, text: "manager" },
     { id: 3, text: "employee" },
   ];
 
-  let specificRoles;
+  let specificrole;
 
-  if (user?.roles === "manager") {
-    specificRoles = defaulRoles.filter((role) => {
+  if (user?.role === "manager") {
+    specificrole = defaulrole.filter((role) => {
       return role.text !== "manager" && role.text !== "admin";
     });
-  } else if (user?.roles === "admin") {
-    specificRoles = defaulRoles.filter((role) => {
+  } else if (user?.role === "admin") {
+    specificrole = defaulrole.filter((role) => {
       return role.text !== "admin";
     });
   }
@@ -45,7 +45,7 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
 
   const [formData, setFormData] = useState<FormData>({
     email: "",
-    roles: "",
+    role: "",
   });
 
   const createForm = (key: string, value: string): void => {
@@ -77,7 +77,7 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
       employee_status: "",
       job_type: "",
       blood_group: "",
-      roles: selectedRole?.text,
+      role: selectedRole?.text,
     };
 
     const user = await pb
@@ -120,7 +120,7 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
             />
             <DropDown
               isOpen={isOpen}
-              options={specificRoles}
+              options={specificrole}
               openDropDown={() => setIsOpen(!isOpen)}
               selectedOption={selectedRole}
               selectOption={(role: any) => setSelectedRole(role)}

@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface Login {
   email: string;
   password: string;
@@ -29,10 +31,15 @@ export interface User {
   nic: string;
   pay: string;
   phone: string;
-  roles: "manager" | "admin" | "employee";
+  role: "manager" | "admin" | "employee";
   updated: string;
   username: string;
   verified: boolean;
+}
+
+export interface UserContextProps {
+  user: User | undefined;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
 }
 
 export interface UserCertificate {
@@ -45,6 +52,8 @@ export interface UserCertificate {
   type: "certificate" | "letter";
   requested_by: string;
   user_email: string;
+  status: "pending" | "inprogress" | "uploaded";
+  file: string;
 }
 
 export interface UserSuggestion {
@@ -108,6 +117,7 @@ export interface CreateCertificate {
   type: "certificate" | "letter";
   requested_by: string;
   user_email: string;
+  status: "pending";
 }
 
 export interface CreateAllowance {

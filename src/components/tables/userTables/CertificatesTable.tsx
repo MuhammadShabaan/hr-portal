@@ -5,10 +5,20 @@ import { CertificatesColumns } from "../dataTableColumns/CertificatesColumn";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserCertificate } from "@/types/Types";
-import React from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "@/context/UserContext";
+import FormWrapper from "../../FormWrapper";
+import CertificateForm from "../../forms/userForms/CertificateForm";
 
 const AllCertificates: React.FC = (): JSX.Element => {
+  const { user }: any = useContext(UserContext);
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [certificateToUpdate, setCertifcateToUpdate] =
+    useState<UserCertificate>();
+
   const { toast } = useToast();
+
+  const role = user?.role;
 
   const fetcher = async (
     url: string
@@ -26,6 +36,8 @@ const AllCertificates: React.FC = (): JSX.Element => {
     `http://127.0.0.1:8090/api/collections/certificates/records`,
     fetcher
   );
+
+  const certificatesColumns = CertificatesColumns(role);
 
   const deleteCertificate = async (certificateId: string): Promise<void> => {
     const deletedCertificate = await DeleteCertificate(certificateId);
@@ -45,10 +57,23 @@ const AllCertificates: React.FC = (): JSX.Element => {
   return (
     <div>
       <Toaster />
+      {showForm && (
+        <FormWrapper onClick={() => setShowForm(!showForm)}>
+          <CertificateForm
+            role={role}
+            certificateToUpdate={certificateToUpdate}
+            hideForm={() => setShowForm(!showForm)}
+          />
+        </FormWrapper>
+      )}
       <DataTable
-        columns={CertificatesColumns}
+        columns={certificatesColumns}
         data={certificates || {}}
-        onClick={(id: string) => deleteCertificate(id)}
+        handleDelete={(id: string) => deleteCertificate(id)}
+        handleEdit={(certificate: UserCertificate) => {
+          setCertifcateToUpdate(certificate);
+          setShowForm(!showForm);
+        }}
       />
     </div>
   );

@@ -2,18 +2,24 @@ import { DeleteUserSuggestion } from "@/api/user";
 import useSWR from "swr";
 import { DataTable } from "../dataTable/DataTable";
 import { SuggestionsColumns } from "../dataTableColumns/SuggestionsColumn";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import FormWrapper from "../../FormWrapper";
 import Suggestions from "../../forms/userForms/SuggestionForm";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserSuggestion } from "@/types/Types";
+import { UserContext } from "@/context/UserContext";
+import Button from "@/model/Button";
 
-const AllSuggestions: React.FC = ({ role }: any): JSX.Element => {
-  const [showFrom, setShowForm] = useState<boolean>(false);
+const AllSuggestions: React.FC = (): JSX.Element => {
+  const [showForm, setShowForm] = useState<boolean>(false);
   const [suggestionToUpdate, setSuggestionToUpdate] =
     useState<UserSuggestion>();
+
   const { toast } = useToast();
+
+  const { user }: any = useContext(UserContext);
+  const role: string = user?.role;
 
   const fetcher = async (
     url: string
@@ -31,6 +37,8 @@ const AllSuggestions: React.FC = ({ role }: any): JSX.Element => {
     `http://127.0.0.1:8090/api/collections/suggestions/records`,
     fetcher
   );
+
+  const suggestionsColumns = SuggestionsColumns(role);
 
   const deleteSuggestion = async (suggestionId: string): Promise<void> => {
     const deletedSuggestion = await DeleteUserSuggestion(suggestionId);
@@ -51,21 +59,32 @@ const AllSuggestions: React.FC = ({ role }: any): JSX.Element => {
   return (
     <div>
       <Toaster />
-      {showFrom ? (
-        <FormWrapper onClick={(): void => setShowForm(!showFrom)}>
-          <Suggestions role={role} suggestionToUpdate={suggestionToUpdate} />
+      <div className="flex items-center justify-end">
+        {role === "employee" && (
+          <Button
+            label="Request Suggestion"
+            onClick={() => setShowForm(!showForm)}
+          />
+        )}
+      </div>{" "}
+      {showForm && (
+        <FormWrapper onClick={(): void => setShowForm(!showForm)}>
+          <Suggestions
+            role={role}
+            suggestionToUpdate={suggestionToUpdate}
+            hideForm={(): void => setShowForm(!showForm)}
+          />
         </FormWrapper>
-      ) : (
-        <DataTable
-          columns={SuggestionsColumns}
-          data={suggestions || {}}
-          handleDelete={(id: string) => deleteSuggestion(id)}
-          handleEdit={(sugeestion: UserSuggestion): void => {
-            setSuggestionToUpdate(sugeestion);
-            setShowForm(!showFrom);
-          }}
-        />
       )}
+      <DataTable
+        columns={suggestionsColumns}
+        data={suggestions || {}}
+        handleDelete={(id: string) => deleteSuggestion(id)}
+        handleEdit={(suggestion: UserSuggestion): void => {
+          setSuggestionToUpdate(suggestion);
+          setShowForm(!showForm);
+        }}
+      />
     </div>
   );
 };

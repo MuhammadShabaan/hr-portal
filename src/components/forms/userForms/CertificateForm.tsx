@@ -2,23 +2,31 @@ import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "../../../model/Input";
 import Button from "../../../model/Button";
 import DropDown from "../../../model/DropDown";
-import { CreateUserCertificate } from "../../../api/user";
+import {
+  CreateUserCertificate,
+  UpdateUserCertificate,
+} from "../../../api/user";
 import { UserContext } from "@/context/UserContext";
 import { CreateCertificate } from "@/types/Types";
 
-const CertificateForm: React.FC = ({ hideForm }: any): JSX.Element => {
+const CertificateForm: React.FC = ({
+  role,
+  certificateToUpdate,
+  hideForm,
+}: any): JSX.Element => {
   const { user }: any = useContext(UserContext);
   const options = [
     { id: 1, text: "certificate" },
     { id: 2, text: "letter" },
   ];
+
   const [selectedCertificate, setSelectedCertificate] =
     useState<any>("Select type");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const [formData, setFormData] = useState<any>({
     title: "",
   });
+  const [selectedStatus, setSeletectedStatus] = useState<any>("Update Status");
 
   const createForm = (key: string, value: string): void => {
     setFormData({
@@ -26,6 +34,28 @@ const CertificateForm: React.FC = ({ hideForm }: any): JSX.Element => {
       [key]: value,
     });
   };
+
+  // <==== Update form
+  const optionsToUpdate = [
+    { id: 1, text: "pending" },
+    { id: 2, text: "inprogress" },
+    { id: 3, text: "uploaded" },
+  ];
+
+  const updateForm = new FormData();
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const fileInput = e.target;
+    const files = fileInput.files;
+
+    for (let file of files) {
+      updateForm.append("file", file);
+    }
+  };
+
+  // console.log("updateform==>", updateForm);
+
+  // ====>
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -35,43 +65,65 @@ const CertificateForm: React.FC = ({ hideForm }: any): JSX.Element => {
       type: selectedCertificate.text,
       requested_by: user?.username,
       user_email: user?.email,
+      status: "pending",
     };
 
-    const certificate = await CreateUserCertificate(data);
+    updateForm.append("status", selectedStatus?.text);
+
+    const certificate =
+      role === "employee"
+        ? await CreateUserCertificate(data)
+        : await UpdateUserCertificate(certificateToUpdate?.id, updateForm);
 
     if (certificate?.id) {
-      setFormData({ title: "" });
-      setSelectedCertificate("Select here");
-      hideForm();
+      if (role === "employee") {
+        setFormData({ title: "" });
+        setSelectedCertificate("Select here");
+        hideForm();
+      } else {
+        setSeletectedStatus("Update status");
+        hideForm();
+      }
     }
   };
 
   return (
     <div className="bg-neutral-200 rounded-md py-3 md:py-6 w-[542px] h-[600px] md:px-10 px-3 space-y-24 overflow-y-auto">
       <p className="text-center text-h1b md:text-h3r capitalize">
-        Request Certificate
+        {role === "employee" ? "Request Certificate" : "Update Request"}
       </p>
       <div className="space-y-5">
         <form onSubmit={handleSubmit}>
-          <Input
-            label="Title"
-            type="text"
-            placeholder={"title"}
-            value={formData.title}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              createForm("title", e.target.value)
-            }
-          />
+          {role === "employee" ? (
+            <Input
+              label="Title"
+              type="text"
+              placeholder={"title"}
+              value={formData.title}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                createForm("title", e.target.value)
+              }
+            />
+          ) : (
+            <input type="file" id="fileInput" onChange={handleFileChange} />
+          )}
+
           <DropDown
             isOpen={isOpen}
-            options={options}
+            options={role === "employee" ? options : optionsToUpdate}
             openDropDown={() => setIsOpen(!isOpen)}
-            selectedOption={selectedCertificate}
-            selectOption={(option: any) => setSelectedCertificate(option)}
+            selectedOption={
+              role === "employee" ? selectedCertificate : selectedStatus
+            }
+            selectOption={(option: any) =>
+              role === "employee"
+                ? setSelectedCertificate(option)
+                : setSeletectedStatus(option)
+            }
           />
 
           <Button
-            label="Apply"
+            label={role === "employee" ? "request" : "Update"}
             color={"primary-900"}
             disabled={false}
             onClick={handleSubmit}
