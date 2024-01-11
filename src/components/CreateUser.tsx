@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useContext, useState } from "react";
-import Button from "../model/Button";
-import Input from "../model/Input";
+import Button from "../shared/Button";
+import Input from "../shared/Input";
 
 import Pocketbase from "pocketbase";
-import DropDown from "../model/DropDown";
+import DropDown from "../shared/DropDown";
 import { UserContext } from "../context/UserContext";
 
 interface role {

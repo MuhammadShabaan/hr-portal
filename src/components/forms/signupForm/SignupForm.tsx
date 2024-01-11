@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Input from "../../../model/Input";
-import Button from "../../../model/Button";
+import Input from "../../../shared/Input";
+import Button from "../../../shared/Button";
 import { FaHome } from "react-icons/fa";
 
 const SignupForm: React.FC = (): JSX.Element => {

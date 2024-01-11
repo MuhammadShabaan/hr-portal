@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import Input from "../../../model/Input";
-import Button from "../../../model/Button";
+import Input from "../../../shared/Input";
+import Button from "../../../shared/Button";
 import { UserContext } from "@/context/UserContext";
 import { UpdateUserInfo } from "@/api/user";
 import { UpdateUser } from "@/types/Types";

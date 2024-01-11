@@ -9,7 +9,7 @@ import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import RequestForm from "../../../components/forms/userForms/RequestForm";
 import { UserRequest } from "@/types/Types";
-import Button from "@/model/Button";
+import Button from "@/shared/Button";
 // import { UserRequest } from "@/types/Types";
 
 const AllRequests: React.FC = (): JSX.Element => {

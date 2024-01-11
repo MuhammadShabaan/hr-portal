@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Button from "../model/Button";
+import Button from "../shared/Button";
 import AllSuggestions from "./tables/userTables/SuggestionsTable";
 import FormWrapper from "./FormWrapper";
 import CertificateForm from "./forms/userForms/CertificateForm";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../model/Button";
+import Button from "../shared/Button";
 import FormWrapper from "./FormWrapper";
 import UserRequest from "./forms/userForms/RequestForm";
 import AllRequests from "./tables/userTables/RequestsTable";

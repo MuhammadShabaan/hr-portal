@@ -1,4 +1,4 @@
-import Dialogue from "../model/Dialogue";
+import Dialogue from "../shared/Dialogue";
 import Board from "../components/Board";
 import Sidebar from "../components/Sidebar";
 import { useContext, useState } from "react";
