@@ -6,15 +6,16 @@ import {
   CreateUserCertificate,
   UpdateUserCertificate,
 } from "../../../api/user";
-import { UserContext } from "@/context/UserContext";
+
 import { CreateCertificate } from "@/types/Types";
+import { useAuth } from "@/context/AuthContext";
 
 const CertificateForm: React.FC = ({
   role,
   certificateToUpdate,
   hideForm,
 }: any): JSX.Element => {
-  const { user }: any = useContext(UserContext);
+  const { user }= useAuth()
   const options = [
     { id: 1, text: "certificate" },
     { id: 2, text: "letter" },
@@ -47,9 +48,13 @@ const CertificateForm: React.FC = ({
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const fileInput = e.target;
     const files = fileInput.files;
-
-    for (let file of files) {
-      updateForm.append("file", file);
+    if (files) {
+      for (let file of files) {
+        updateForm.append("file", file);
+      }
+    }
+    else {
+    // :TODO Handle this gracefully
     }
   };
 

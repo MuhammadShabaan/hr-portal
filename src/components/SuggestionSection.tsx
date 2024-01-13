@@ -4,7 +4,7 @@ import AllSuggestions from "./tables/userTables/SuggestionsTable";
 import FormWrapper from "./FormWrapper";
 import CertificateForm from "./forms/userForms/CertificateForm";
 import SuggestionForm from "./forms/userForms/SuggestionForm";
-import { UserContext } from "@/context/UserContext";
+
 
 const SuggestionSection = () => {
   const [show, setShow] = useState<boolean>(false);

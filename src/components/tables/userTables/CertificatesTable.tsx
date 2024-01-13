@@ -5,13 +5,13 @@ import { CertificatesColumns } from "../dataTableColumns/CertificatesColumn";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserCertificate } from "@/types/Types";
-import React, { useContext, useState } from "react";
-import { UserContext } from "@/context/UserContext";
+import React, {useState } from "react";
 import FormWrapper from "../../FormWrapper";
 import CertificateForm from "../../forms/userForms/CertificateForm";
+import { useAuth } from "@/context/AuthContext";
 
 const AllCertificates: React.FC = (): JSX.Element => {
-  const { user }: any = useContext(UserContext);
+  const { user }= useAuth()
   const [showForm, setShowForm] = useState<boolean>(false);
   const [certificateToUpdate, setCertifcateToUpdate] =
     useState<UserCertificate>();

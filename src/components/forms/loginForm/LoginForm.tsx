@@ -1,13 +1,16 @@
+// :TODO Need to do this Login with pocketbase sdk
+
+
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../../types/Types";
-import { UserContext } from "@/context/UserContext";
+
 import { UserLogin } from "../../../api/user";
 
 const LoginForm: React.FC = (): JSX.Element => {
-  const { setUser }: any = useContext(UserContext);
+  
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<Login>({
@@ -29,7 +32,7 @@ const LoginForm: React.FC = (): JSX.Element => {
 
     if (user != null && user != undefined) {
       window.localStorage.setItem("user", JSON.stringify(user?.record));
-      setUser(user?.record);
+  
       navigate("/dashboard");
     } else {
       console.log("Can not store null or undefined value in local sotrage");

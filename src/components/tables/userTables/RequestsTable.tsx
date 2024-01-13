@@ -1,6 +1,5 @@
 import useSWR from "swr";
-import { UserContext } from "@/context/UserContext";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import FormWrapper from "../../FormWrapper";
 import { DeleteUserRequest } from "@/api/user";
 import { DataTable } from "../dataTable/DataTable";
@@ -10,10 +9,11 @@ import { useToast } from "../../ui/use-toast";
 import RequestForm from "../../../components/forms/userForms/RequestForm";
 import { UserRequest } from "@/types/Types";
 import Button from "@/shared/Button";
+import { useAuth } from "@/context/AuthContext";
 // import { UserRequest } from "@/types/Types";
 
 const AllRequests: React.FC = (): JSX.Element => {
-  const { user }: any = useContext(UserContext);
+  const { user }= useAuth();
   const [showForm, setShowForm] = useState<boolean>(false);
   const [requestToUpdate, setRequestToUpdate] = useState<any>();
   const { toast } = useToast();

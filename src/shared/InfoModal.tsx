@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { IoPersonOutline } from "react-icons/io5";
-import { LogOutUser } from "../types/Types";
 import { useNavigate } from "react-router-dom";
 
-const Info = ({ logOutUser }: LogOutUser): JSX.Element => {
+const Info = (): JSX.Element => {
   const [hide, setHide] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -28,7 +27,6 @@ const Info = ({ logOutUser }: LogOutUser): JSX.Element => {
           <p
             className="text-white mt-2 cursor-pointer hover:bg-white hover:text-black px-3 rounded-sm"
             onClick={() => {
-              logOutUser();
               setHide(!hide);
             }}
           >

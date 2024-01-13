@@ -2,12 +2,13 @@ import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
 import { CreateUserAllowance } from "../../../api/user";
-import { UserContext } from "@/context/UserContext";
+
 import TextArea from "@/shared/TextArea";
 import { CreateAllowance } from "@/types/Types";
+import { useAuth } from "@/context/AuthContext";
 
 const AllowanceForm = ({ hideForm }: any) => {
-  const { user }: any = useContext(UserContext);
+  const { user } = useAuth()
 
   const [formData, setFormData] = useState<any>({
     allowance_amount: "",

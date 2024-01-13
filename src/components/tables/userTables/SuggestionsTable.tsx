@@ -8,8 +8,8 @@ import Suggestions from "../../forms/userForms/SuggestionForm";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserSuggestion } from "@/types/Types";
-import { UserContext } from "@/context/UserContext";
 import Button from "@/shared/Button";
+import { useAuth } from "@/context/AuthContext";
 
 const AllSuggestions: React.FC = (): JSX.Element => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -18,7 +18,7 @@ const AllSuggestions: React.FC = (): JSX.Element => {
 
   const { toast } = useToast();
 
-  const { user }: any = useContext(UserContext);
+  const { user }= useAuth()
   const role: string = user?.role;
 
   const fetcher = async (

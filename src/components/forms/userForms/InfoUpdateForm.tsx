@@ -1,12 +1,14 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
-import { UserContext } from "@/context/UserContext";
+// :TODO Check for potential Bugs in this after Auth context Update
+
 import { UpdateUserInfo } from "@/api/user";
 import { UpdateUser } from "@/types/Types";
+import { useAuth } from "@/context/AuthContext";
 
 const InfoUpdateForm: React.FC = (): JSX.Element => {
-  const { user, setUser }: any = useContext(UserContext);
+  const { user }: any = useAuth()
 
   const [form, setForm] = useState<UpdateUser>({
     username: user.username,
@@ -24,9 +26,14 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
     const fileInput = e.target;
     const files = fileInput.files;
 
-    for (let file of files) {
-      formData.append("avatar", file);
+    if(!!files){
+      for (let file of files) {
+        formData.append("avatar", file);
+      }
+    }else{
+      //:TODO : Handle This gracefull
     }
+
   };
 
   const createForm = (key: string, value: string): void => {
@@ -49,21 +56,7 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
 
     const updatedUser = await UpdateUserInfo(user.id, formData);
 
-    if (updatedUser != null && updatedUser != undefined) {
-      window.localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
-      setForm({
-        username: "",
-        name: "",
-        nic: "",
-        address: "",
-        phone: "",
-        emergency_phone: "",
-        blood_group: "",
-      });
-    } else {
-      console.log("Can not store null or undefined value in local sotrage");
-    }
+  
   };
 
   return (
