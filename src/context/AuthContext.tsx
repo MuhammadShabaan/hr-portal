@@ -2,8 +2,8 @@ import React, { createContext, useContext, ReactNode, useEffect, useState } from
 import { User } from '@/types/Types';
 
 interface AuthContext {
-  token: string;
-  user: User;
+  token: string | null;
+  user: User | null;
 }
 
 interface AuthObject {
@@ -52,15 +52,18 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) =>
 };
 
 // Create a custom hook to easily access the context
-export const useAuth = (): { token: string; user: User } => {
+export const useAuth = (): { token: string | null; user: User | null } => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within an AuthContextProvider');
+    return {
+      token: null,
+      user: null,
+    }
+  } else {
+    return {
+      token: context.token,
+      user: context.user,
+    };
   }
-
-  return {
-    token: context.token,
-    user: context.user,
-  };
 };

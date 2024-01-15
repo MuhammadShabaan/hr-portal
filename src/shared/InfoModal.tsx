@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoPersonOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { logout } from "@/services/AuthService";
 
 const Info = (): JSX.Element => {
   const [hide, setHide] = useState<boolean>(false);
@@ -24,14 +25,15 @@ const Info = (): JSX.Element => {
           >
             Profile
           </p>
-          <p
+          <button
             className="text-white mt-2 cursor-pointer hover:bg-white hover:text-black px-3 rounded-sm"
             onClick={() => {
-              setHide(!hide);
+            logout()
+            navigate("/login",{ replace: true });
             }}
           >
             Logout
-          </p>
+          </button>
         </div>
       )}
     </>

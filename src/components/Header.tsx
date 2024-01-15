@@ -1,6 +1,6 @@
 import { FaBell, FaHome } from "react-icons/fa";
 
-import Info from "../shared/InfoModal";
+import HeaderDropdown from "../shared/InfoModal";
 
 
 const Header = () => {
@@ -11,7 +11,7 @@ const Header = () => {
         </div>
         <div className="flex items-center justify-between gap-7">
           <FaBell className="cursor-pointer" />
-          <Info />
+          <HeaderDropdown />
         </div>
       </div>
     

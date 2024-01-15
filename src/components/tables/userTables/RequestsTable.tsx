@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import React, { useState } from "react";
 import FormWrapper from "../../FormWrapper";
-import { DeleteUserRequest } from "@/api/user";
+import { DeleteUserRequest } from "@/services/UserService";
 import { DataTable } from "../dataTable/DataTable";
 import { RequestsColumns } from "../dataTableColumns/RequestsColumn";
 import { Toaster } from "../../ui/toaster";

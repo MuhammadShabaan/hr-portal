@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Button from "../../../shared/Button";
 import DropDown from "../../../shared/DropDown";
-import { CreateUserRequest, UpdateUserRequest } from "../../../api/user";
+import { CreateUserRequest, UpdateUserRequest } from "../../../services/UserService";
 import TextArea from "../../../shared/TextArea";
 import { CreateRequest, UpdateRequest } from "@/types/Types";
 import { useAuth } from "@/context/AuthContext";

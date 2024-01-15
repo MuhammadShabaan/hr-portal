@@ -3,7 +3,7 @@ import Button from "../../../shared/Button";
 
 import DropDown from "../../../shared/DropDown";
 import TextArea from "../../../shared/TextArea";
-import { CreateUserSuggestion, UpdateUserSuggestion } from "@/api/user";
+import { CreateUserSuggestion, UpdateUserSuggestion } from "@/services/UserService";
 import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
 import { useAuth } from "@/context/AuthContext";
 

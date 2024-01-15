@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { DeleteCertificate } from "@/api/user";
+import { DeleteCertificate } from "@/services/UserService";
 import { DataTable } from "../dataTable/DataTable";
 import { CertificatesColumns } from "../dataTableColumns/CertificatesColumn";
 import { Toaster } from "../../ui/toaster";

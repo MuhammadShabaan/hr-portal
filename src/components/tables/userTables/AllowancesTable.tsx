@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { DeleteUserAllowance } from "@/api/user";
+import { DeleteUserAllowance } from "@/services/UserService";
 import { DataTable } from "../dataTable/DataTable";
 import { AllowancesColumns } from "../dataTableColumns/AllowancesColumn";
 import { Toaster } from "../../ui/toaster";

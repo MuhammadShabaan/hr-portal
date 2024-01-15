@@ -3,7 +3,7 @@ import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
 // :TODO Check for potential Bugs in this after Auth context Update
 
-import { UpdateUserInfo } from "@/api/user";
+import { UpdateUserInfo } from "@/services/UserService";
 import { UpdateUser } from "@/types/Types";
 import { useAuth } from "@/context/AuthContext";
 

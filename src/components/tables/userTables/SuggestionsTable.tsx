@@ -1,4 +1,4 @@
-import { DeleteUserSuggestion } from "@/api/user";
+import { DeleteUserSuggestion } from "@/services/UserService";
 import useSWR from "swr";
 import { DataTable } from "../dataTable/DataTable";
 import { SuggestionsColumns } from "../dataTableColumns/SuggestionsColumn";

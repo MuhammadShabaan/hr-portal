@@ -5,7 +5,7 @@ import DropDown from "../../../shared/DropDown";
 import {
   CreateUserCertificate,
   UpdateUserCertificate,
-} from "../../../api/user";
+} from "../../../services/UserService";
 
 import { CreateCertificate } from "@/types/Types";
 import { useAuth } from "@/context/AuthContext";

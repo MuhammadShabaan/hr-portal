@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
-import { CreateUserAllowance } from "../../../api/user";
+import { CreateUserAllowance } from "../../../services/UserService";
 
 import TextArea from "@/shared/TextArea";
 import { CreateAllowance } from "@/types/Types";
