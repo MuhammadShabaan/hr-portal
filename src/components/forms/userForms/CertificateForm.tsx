@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import Input from "../../../model/Input";
-import Button from "../../../model/Button";
-import DropDown from "../../../model/DropDown";
+import Input from "../../../shared/Input";
+import Button from "../../../shared/Button";
+import DropDown from "../../../shared/DropDown";
 import {
   CreateUserCertificate,
   UpdateUserCertificate,

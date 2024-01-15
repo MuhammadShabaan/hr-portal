@@ -1,9 +1,9 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import Button from "../../../model/Button";
+import Button from "../../../shared/Button";
 import { UserContext } from "@/context/UserContext";
-import DropDown from "../../../model/DropDown";
+import DropDown from "../../../shared/DropDown";
 import { CreateUserRequest, UpdateUserRequest } from "../../../api/user";
-import TextArea from "../../../model/TextArea";
+import TextArea from "../../../shared/TextArea";
 import { CreateRequest, UpdateRequest } from "@/types/Types";
 
 const RequestForm: React.FC = ({

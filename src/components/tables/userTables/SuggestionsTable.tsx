@@ -9,7 +9,7 @@ import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserSuggestion } from "@/types/Types";
 import { UserContext } from "@/context/UserContext";
-import Button from "@/model/Button";
+import Button from "@/shared/Button";
 
 const AllSuggestions: React.FC = (): JSX.Element => {
   const [showForm, setShowForm] = useState<boolean>(false);

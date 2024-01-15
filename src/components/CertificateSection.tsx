@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CertificateForm from "./forms/userForms/CertificateForm";
-import Button from "../model/Button";
+import Button from "../shared/Button";
 import FormWrapper from "./FormWrapper";
 import AllCertificates from "./tables/userTables/CertificatesTable";
 

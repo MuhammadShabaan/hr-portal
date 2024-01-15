@@ -5,7 +5,7 @@ import {
   FaTeamspeak,
   FaVoicemail,
 } from "react-icons/fa";
-import TabButton from "../model/TabButton";
+import TabButton from "../shared/TabButton";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 

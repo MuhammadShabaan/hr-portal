@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
-import Button from "../../../model/Button";
+import Button from "../../../shared/Button";
 import { UserContext } from "@/context/UserContext";
-import DropDown from "../../../model/DropDown";
-import TextArea from "../../../model/TextArea";
+import DropDown from "../../../shared/DropDown";
+import TextArea from "../../../shared/TextArea";
 import { CreateUserSuggestion, UpdateUserSuggestion } from "@/api/user";
 import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
 

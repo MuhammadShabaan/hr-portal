@@ -1,4 +1,4 @@
-import DropDown from "../model/DropDown";
+import DropDown from "../shared/DropDown";
 
 const SplashScreen = () => {
   return (

@@ -1,6 +1,6 @@
 import { FaBell, FaHome } from "react-icons/fa";
-import TabButton from "../model/TabButton";
-import Info from "../model/InfoModal";
+import TabButton from "../shared/TabButton";
+import Info from "../shared/InfoModal";
 import { LogOutUser } from "../types/Types";
 
 const MenuDashboard = ({ logOutUser }: LogOutUser) => {
