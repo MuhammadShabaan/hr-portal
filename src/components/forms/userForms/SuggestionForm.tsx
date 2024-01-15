@@ -1,10 +1,11 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Button from "../../../shared/Button";
-import { UserContext } from "@/context/UserContext";
+
 import DropDown from "../../../shared/DropDown";
 import TextArea from "../../../shared/TextArea";
-import { CreateUserSuggestion, UpdateUserSuggestion } from "@/api/user";
+import { CreateUserSuggestion, UpdateUserSuggestion } from "@/services/UserService";
 import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
+import { useAuth } from "@/context/AuthContext";
 
 const SuggestionForm: React.FC = ({
   role,
@@ -20,7 +21,7 @@ const SuggestionForm: React.FC = ({
     useState<any>("Select type");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { user }: any = useContext(UserContext);
+  const { user } = useAuth()
 
   const [formData, setFormData] = useState<any>({
     description: "",

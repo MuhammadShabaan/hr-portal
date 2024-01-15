@@ -1,15 +1,15 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
+import { useState, ChangeEvent, FormEvent} from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
-import { CreateUserAllowance } from "../../../api/user";
-import { UserContext } from "@/context/UserContext";
+import { CreateUserAllowance } from "../../../services/UserService";
 import TextArea from "@/shared/TextArea";
 import { CreateAllowance } from "@/types/Types";
+import { useAuth } from "@/context/AuthContext";
 
 const PayslipForm = ({ hideForm }: any) => {
   // Payslip form not created yet. Code below creates allowance data
 
-  const { user }: any = useContext(UserContext);
+  const { user } = useAuth()
 
   const [formData, setFormData] = useState<any>({
     allowance_amount: "",

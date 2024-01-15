@@ -4,30 +4,34 @@ import {
   CreateRequest,
   CreateSuggestion,
   Login,
-  UpdateUserRequest,
+  // UpdateUserRequest,
   UpdateSuggestion,
   UpdateUser,
 } from "@/types/Types";
+
 import Pocketbase, { RecordAuthResponse, RecordModel } from "pocketbase";
 
+
+const API_BASE_URL= import.meta.env.VITE_API_BASE_URL
+console.log(`Hello---${API_BASE_URL}`)
 const pb = new Pocketbase("http://127.0.0.1:8090");
 
 //<====================================== User Authentication ======================================>//
 
-const UserLogin = async (
-  data: Login
-): Promise<RecordAuthResponse<RecordModel> | void> => {
-  const user = await pb
-    .collection("users")
-    .authWithPassword(data.email, data.password)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      console.log("Error while logging in ", error);
-    });
-  return user;
-};
+// const UserLogin = async (
+//   data: Login
+// ): Promise<RecordAuthResponse<RecordModel> | void> => {
+//   const user = await pb
+//     .collection("users")
+//     .authWithPassword(data.email, data.password)
+//     .then((result) => {
+//       return result;
+//     })
+//     .catch((error) => {
+//       console.log("Error while logging in ", error);
+//     });
+//   return user;
+// };
 
 //<====================================== Create Requests ======================================>//
 

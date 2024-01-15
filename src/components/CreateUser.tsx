@@ -1,10 +1,11 @@
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 
 import Pocketbase from "pocketbase";
 import DropDown from "../shared/DropDown";
-import { UserContext } from "../context/UserContext";
+import { useAuth } from "@/context/AuthContext";
+
 
 interface role {
   id: number;
@@ -17,7 +18,7 @@ interface FormData {
 }
 
 const CreateUser = ({ setHideUserModal, userType }: any) => {
-  const { user }: any = useContext(UserContext);
+  const { user } = useAuth()
 
   const defaulrole = [
     { id: 1, text: "admin" },
