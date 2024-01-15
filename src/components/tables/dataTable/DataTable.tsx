@@ -16,7 +16,8 @@ import {
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import { useContext } from "react";
-import { UserContext } from "@/context/UserContext";
+import { useAuth } from "@/context/AuthContext";
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,7 +38,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const { user }: any = useContext(UserContext);
+  const { user } = useAuth()
   const role = user?.role;
 
   return (

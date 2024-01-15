@@ -37,10 +37,6 @@ export interface User {
   verified: boolean;
 }
 
-export interface UserContextProps {
-  user: User | undefined;
-  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
-}
 
 export interface UserCertificate {
   id: string;
@@ -167,3 +163,5 @@ export interface UpdateRequest {
   status: "pending" | "accepted" | "declined";
   note: string;
 }
+
+

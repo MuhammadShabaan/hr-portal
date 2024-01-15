@@ -1,15 +1,22 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
+// :TODO Need to do this Login with pocketbase sdk
+
+
+import { useState, ChangeEvent, FormEvent} from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../../types/Types";
-import { UserContext } from "@/context/UserContext";
-import { UserLogin } from "../../../api/user";
+
+import { login } from "@/services/AuthService"; 
+import { useAuth } from "@/context/AuthContext";
 
 const LoginForm: React.FC = (): JSX.Element => {
-  const { setUser }: any = useContext(UserContext);
   const navigate = useNavigate();
 
+  const {token} = useAuth()
+  if(token){
+    navigate("/updateinfo")
+  }
   const [formData, setFormData] = useState<Login>({
     email: "",
     password: "",
@@ -24,15 +31,13 @@ const LoginForm: React.FC = (): JSX.Element => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-
-    const user = await UserLogin(formData);
+    const {email, password} = formData;
+    const user = await login(email,password);
 
     if (user != null && user != undefined) {
-      window.localStorage.setItem("user", JSON.stringify(user?.record));
-      setUser(user?.record);
-      navigate("/dashboard");
+      navigate("/updateinfo");
     } else {
-      console.log("Can not store null or undefined value in local sotrage");
+      console.log("Error while logging in user");
     }
   };
 

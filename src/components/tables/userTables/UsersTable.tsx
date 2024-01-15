@@ -1,4 +1,4 @@
-import { DeleteUser } from "@/api/user";
+import { DeleteUser } from "@/services/UserService";
 import useSWR from "swr";
 import { DataTable } from "../dataTable/DataTable";
 import { UsersColumns } from "../dataTableColumns/UsersColumn";

@@ -1,9 +1,9 @@
-import { UserContext } from "@/context/UserContext";
-import { useContext } from "react";
+
+import { useAuth } from "@/context/AuthContext";
 import { IoPersonOutline } from "react-icons/io5";
 
 const ProfileInfo = () => {
-  const { user }: any = useContext(UserContext);
+  const { user }= useAuth()
   const userName = user?.username;
   const userEmail = user?.email;
   const userRole = user?.role;

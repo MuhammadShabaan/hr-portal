@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { DeleteUserPayslip } from "@/api/user";
+import { DeleteUserPayslip } from "@/services/UserService";
 import { DataTable } from "../dataTable/DataTable";
 import { PayslipsColumns } from "../dataTableColumns/PayslipsColumn";
 import { Toaster } from "../../ui/toaster";
