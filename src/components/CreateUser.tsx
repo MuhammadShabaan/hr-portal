@@ -4,8 +4,7 @@ import Input from "../shared/Input";
 
 import Pocketbase from "pocketbase";
 import DropDown from "../shared/DropDown";
-import { useAuth } from "@/context/AuthContext";
-
+import pb from "@/services/PocketBase";
 
 interface role {
   id: number;
@@ -18,7 +17,7 @@ interface FormData {
 }
 
 const CreateUser = ({ setHideUserModal, userType }: any) => {
-  const { user } = useAuth()
+  const user = pb.authStore.model;
 
   const defaulrole = [
     { id: 1, text: "admin" },

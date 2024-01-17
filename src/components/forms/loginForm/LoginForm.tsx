@@ -1,21 +1,21 @@
 // :TODO Need to do this Login with pocketbase sdk
 
-
-import { useState, ChangeEvent, FormEvent} from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
 import { useNavigate } from "react-router-dom";
 import { Login } from "../../../types/Types";
 
-import { login } from "@/services/AuthService"; 
-import { useAuth } from "@/context/AuthContext";
+import { login } from "@/services/AuthService";
+
+import pb from "@/services/PocketBase";
 
 const LoginForm: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
 
-  const {token} = useAuth()
-  if(token){
-    navigate("/updateinfo")
+  const token = pb.authStore.token;
+  if (token) {
+    navigate("/updateinfo");
   }
   const [formData, setFormData] = useState<Login>({
     email: "",
@@ -31,16 +31,24 @@ const LoginForm: React.FC = (): JSX.Element => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const {email, password} = formData;
-    const user = await login(email,password);
+    const { email, password } = formData;
+    const user = await login(email, password);
 
-    if (user != null && user != undefined) {
-      navigate("/updateinfo");
+    if (user) {
+      console.log("user added");
+      navigate("/");
     } else {
       console.log("Error while logging in user");
     }
   };
 
+  useEffect(() => {
+    const token = pb.authStore.token;
+    console.log("toekn", token);
+    if (token) {
+      navigate(-1);
+    }
+  }, []);
   return (
     <div className="bg-neutral-200 rounded-md py-3 md:py-6 w-[542px] h-[600px] md:px-10 px-3 space-y-24">
       <p className="text-center text-h1b md:text-h3r capitalize">Login</p>

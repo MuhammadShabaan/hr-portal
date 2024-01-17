@@ -1,15 +1,16 @@
-import { DeleteUserSuggestion } from "@/services/UserService";
+import { DeleteUserSuggestion } from "@/services/SuggestionService";
 import useSWR from "swr";
 import { DataTable } from "../dataTable/DataTable";
 import { SuggestionsColumns } from "../dataTableColumns/SuggestionsColumn";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import FormWrapper from "../../FormWrapper";
 import Suggestions from "../../forms/userForms/SuggestionForm";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserSuggestion } from "@/types/Types";
 import Button from "@/shared/Button";
-import { useAuth } from "@/context/AuthContext";
+
+import pb from "@/services/PocketBase";
 
 const AllSuggestions: React.FC = (): JSX.Element => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -18,7 +19,7 @@ const AllSuggestions: React.FC = (): JSX.Element => {
 
   const { toast } = useToast();
 
-  const { user }= useAuth()
+  const user = pb.authStore.model;
   const role: string = user?.role;
 
   const fetcher = async (
@@ -43,7 +44,7 @@ const AllSuggestions: React.FC = (): JSX.Element => {
   const deleteSuggestion = async (suggestionId: string): Promise<void> => {
     const deletedSuggestion = await DeleteUserSuggestion(suggestionId);
 
-    if (deletedSuggestion === undefined) {
+    if (deletedSuggestion) {
       toast({
         title: "Success",
         description: "Deleted Successfully",

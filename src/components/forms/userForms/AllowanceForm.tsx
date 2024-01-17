@@ -1,14 +1,14 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
-import { CreateUserAllowance } from "../../../services/UserService";
+import { CreateUserAllowance } from "@/services/AllowanceService";
 
 import TextArea from "@/shared/TextArea";
 import { CreateAllowance } from "@/types/Types";
-import { useAuth } from "@/context/AuthContext";
+import pb from "@/services/PocketBase";
 
 const AllowanceForm = ({ hideForm }: any) => {
-  const { user } = useAuth()
+  const user = pb.authStore.model;
 
   const [formData, setFormData] = useState<any>({
     allowance_amount: "",

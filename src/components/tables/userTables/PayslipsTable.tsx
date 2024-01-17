@@ -1,14 +1,19 @@
 import useSWR from "swr";
-import { DeleteUserPayslip } from "@/services/UserService";
+import { DeleteUserPayslip } from "@/services/PayslipService";
 import { DataTable } from "../dataTable/DataTable";
 import { PayslipsColumns } from "../dataTableColumns/PayslipsColumn";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserPayslip } from "@/types/Types";
 import React from "react";
+import pb from "@/services/PocketBase";
 
 const AllPayslips: React.FC = (): JSX.Element => {
   const { toast } = useToast();
+
+  const user = pb.authStore.model;
+
+  const role = user?.role;
 
   const fetcher = async (url: string): Promise<UserPayslip[] | undefined> => {
     const response = await fetch(url);
@@ -22,9 +27,11 @@ const AllPayslips: React.FC = (): JSX.Element => {
     isLoading,
   } = useSWR(`http://127.0.0.1:8090/api/collections/payslips/records`, fetcher);
 
+  const payslipsColumns = PayslipsColumns(role);
+
   const deletePayslip = async (payslipId: string): Promise<void> => {
     const deletedPayslip = await DeleteUserPayslip(payslipId);
-    if (deletedPayslip === undefined) {
+    if (deletedPayslip) {
       toast({
         title: "Success",
         description: "Deleted Successfully",
@@ -41,7 +48,7 @@ const AllPayslips: React.FC = (): JSX.Element => {
     <div>
       <Toaster />
       <DataTable
-        columns={PayslipsColumns}
+        columns={payslipsColumns}
         data={payslips || {}}
         onClick={(id: string): Promise<void> => deletePayslip(id)}
       />

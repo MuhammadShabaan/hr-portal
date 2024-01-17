@@ -1,21 +1,23 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
 import DropDown from "../../../shared/DropDown";
 import {
   CreateUserCertificate,
   UpdateUserCertificate,
-} from "../../../services/UserService";
+} from "@/services/CertificateService";
 
 import { CreateCertificate } from "@/types/Types";
-import { useAuth } from "@/context/AuthContext";
+
+import pb from "@/services/PocketBase";
 
 const CertificateForm: React.FC = ({
   role,
   certificateToUpdate,
   hideForm,
 }: any): JSX.Element => {
-  const { user }= useAuth()
+  const user = pb.authStore.model;
+
   const options = [
     { id: 1, text: "certificate" },
     { id: 2, text: "letter" },
@@ -52,9 +54,8 @@ const CertificateForm: React.FC = ({
       for (let file of files) {
         updateForm.append("file", file);
       }
-    }
-    else {
-    // :TODO Handle this gracefully
+    } else {
+      // :TODO Handle this gracefully
     }
   };
 

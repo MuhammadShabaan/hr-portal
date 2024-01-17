@@ -1,9 +1,8 @@
-
-import { useAuth } from "@/context/AuthContext";
+import pb from "@/services/PocketBase";
 import { IoPersonOutline } from "react-icons/io5";
 
 const ProfileInfo = () => {
-  const { user }= useAuth()
+  const user = pb.authStore.model;
   const userName = user?.username;
   const userEmail = user?.email;
   const userRole = user?.role;

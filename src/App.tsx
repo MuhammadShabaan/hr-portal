@@ -7,41 +7,32 @@ import SuggestionSection from "./components/SuggestionSection";
 import AllowanceSection from "./components/AllowanceSection";
 import RequestSection from "./components/RequestSection";
 import InfoUpdateForm from "./components/forms/userForms/InfoUpdateForm";
-import { useAuth } from "./context/AuthContext";
 
+import NotFound from "./pages/NotFound";
 
-function AuthenticatedRoutes() {
-  return (
-    <Layout>
-      <Routes>
-        <Route path="/updateinfo" element={<InfoUpdateForm />} />
-        <Route path="/certificates" element={<CertificateSection />} />
-        <Route path="/payslip" element={<PayslipSection />} />
-        <Route path="/suggestions" element={<SuggestionSection />} />
-        <Route path="/allowances" element={<AllowanceSection />} />
-        <Route path="/requests" element={<RequestSection />} />
-      </Routes>
-    </Layout>
-  );
-}
-
-function UnauthenticatedRoutes() {
+function Routing() {
   return (
     <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="updateinfo" element={<InfoUpdateForm />} />
+        <Route path="certificates" element={<CertificateSection />} />
+        <Route path="payslip" element={<PayslipSection />} />
+        <Route path="suggestions" element={<SuggestionSection />} />
+        <Route path="allowances" element={<AllowanceSection />} />
+        <Route path="requests" element={<RequestSection />} />
+      </Route>
       <Route path="/login" element={<Login />} />
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
 
 function App() {
-  const {user} = useAuth()
- 
   return (
     <BrowserRouter>
-      {user ? <AuthenticatedRoutes /> : <UnauthenticatedRoutes />}
+      <Routing />
     </BrowserRouter>
   );
 }
 
-export default App
+export default App;

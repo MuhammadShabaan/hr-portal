@@ -5,11 +5,20 @@ import { logout } from "@/services/AuthService";
 
 const Info = (): JSX.Element => {
   const [hide, setHide] = useState<boolean>(false);
+
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/login");
+  //   } else {
+  //     return;
+  //   }
+  // }, [token]);
 
   return (
     <>
-      <div className="flex items-center justify-center  rounded-full  border border-neutral-900 w-6 h-6">
+      <div className="flex items-center justify-center rounded-full  border border-neutral-900 w-6 h-6">
         <button onClick={() => setHide(!hide)}>
           <IoPersonOutline />
         </button>
@@ -28,8 +37,9 @@ const Info = (): JSX.Element => {
           <button
             className="text-white mt-2 cursor-pointer hover:bg-white hover:text-black px-3 rounded-sm"
             onClick={() => {
-            logout()
-            navigate("/login",{ replace: true });
+              logout();
+
+              navigate("/login");
             }}
           >
             Logout

@@ -24,7 +24,7 @@ const AllUsers: React.FC = (): JSX.Element => {
 
   const deleteUser = async (userId: any): Promise<void> => {
     const deletedUser = await DeleteUser(userId);
-    if (deletedUser === undefined) {
+    if (deletedUser) {
       toast({
         title: "Success",
         description: "Deleted Successfully",

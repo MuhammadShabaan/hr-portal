@@ -1,10 +1,14 @@
 import { useState, ChangeEvent, FormEvent, useContext } from "react";
 import Button from "../../../shared/Button";
 import DropDown from "../../../shared/DropDown";
-import { CreateUserRequest, UpdateUserRequest } from "../../../services/UserService";
+import {
+  CreateUserRequest,
+  UpdateUserRequest,
+} from "@/services/RequestService";
 import TextArea from "../../../shared/TextArea";
 import { CreateRequest, UpdateRequest } from "@/types/Types";
-import { useAuth } from "@/context/AuthContext";
+
+import pb from "@/services/PocketBase";
 
 const RequestForm: React.FC = ({
   requestToUpdate,
@@ -28,7 +32,7 @@ const RequestForm: React.FC = ({
   const [selectedStatus, setSelectedStatus] = useState<any>("Select status");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { user } = useAuth()
+  const user = pb.authStore.model;
 
   const [formData, setFormData] = useState<any>({
     description: "",

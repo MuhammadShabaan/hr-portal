@@ -15,9 +15,8 @@ import {
 } from "@/components/ui/table";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
-import { useContext } from "react";
-import { useAuth } from "@/context/AuthContext";
 
+import pb from "@/services/PocketBase";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,7 +37,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const { user } = useAuth()
+  const user = pb.authStore.model;
   const role = user?.role;
 
   return (

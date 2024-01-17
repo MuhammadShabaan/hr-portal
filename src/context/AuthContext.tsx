@@ -1,5 +1,11 @@
-import React, { createContext, useContext, ReactNode, useEffect, useState } from 'react';
-import { User } from '@/types/Types';
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
+import { User } from "@/types/Types";
 
 interface AuthContext {
   token: string | null;
@@ -17,10 +23,14 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContext | undefined>(undefined);
 
-export const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) => {
+export const AuthContextProvider: React.FC<AuthContextProps> = ({
+  children,
+}) => {
   const parseAuthData = (): AuthContext | undefined => {
     try {
-      const data: AuthObject | null = JSON.parse(localStorage.getItem('pocketbase_auth') || 'null');
+      const data: AuthObject | null = JSON.parse(
+        localStorage.getItem("pocketbase_auth") || "null"
+      );
 
       if (!data?.token || !data?.model) return undefined;
 
@@ -29,26 +39,29 @@ export const AuthContextProvider: React.FC<AuthContextProps> = ({ children }) =>
         user: data.model,
       };
     } catch (error) {
-      console.error('Error parsing authentication data:', error);
+      console.error("Error parsing authentication data:", error);
       // Handle the error gracefully, maybe redirect to a login page or take appropriate action
       return undefined;
     }
   };
-
-  const [contextValue, setContextValue] = useState<AuthContext | undefined>(() => parseAuthData());
+  const [contextValue, setContextValue] = useState<AuthContext | undefined>(
+    () => parseAuthData()
+  );
 
   useEffect(() => {
     const handleStorageChange = () => {
       setContextValue(parseAuthData());
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
 };
 
 // Create a custom hook to easily access the context
@@ -59,7 +72,7 @@ export const useAuth = (): { token: string | null; user: User | null } => {
     return {
       token: null,
       user: null,
-    }
+    };
   } else {
     return {
       token: context.token,

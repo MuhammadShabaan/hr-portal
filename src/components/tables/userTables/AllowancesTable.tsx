@@ -1,14 +1,19 @@
 import useSWR from "swr";
-import { DeleteUserAllowance } from "@/services/UserService";
+import { DeleteUserAllowance } from "@/services/AllowanceService";
 import { DataTable } from "../dataTable/DataTable";
-import { AllowancesColumns } from "../dataTableColumns/AllowancesColumn";
+
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserAllowance } from "@/types/Types";
 import React from "react";
 
+import { AllowancesColumns } from "../dataTableColumns/AllowancesColumn";
+import pb from "@/services/PocketBase";
+
 const AllAllowances: React.FC = (): JSX.Element => {
   const { toast } = useToast();
+  const user = pb.authStore.model;
+  const role = user?.role;
 
   const fetcher = async (url: string): Promise<UserAllowance[] | undefined> => {
     const response = await fetch(url);
@@ -25,9 +30,11 @@ const AllAllowances: React.FC = (): JSX.Element => {
     fetcher
   );
 
+  const allowancesColumns = AllowancesColumns(role);
+
   const deleteAllowance = async (allowanceId: string): Promise<void> => {
     const deletedAllowance = await DeleteUserAllowance(allowanceId);
-    if (deletedAllowance === undefined) {
+    if (deletedAllowance) {
       toast({
         title: "Success",
         description: "Deleted Successfully",
@@ -44,7 +51,7 @@ const AllAllowances: React.FC = (): JSX.Element => {
     <>
       <Toaster />
       <DataTable
-        columns={AllowancesColumns}
+        columns={allowancesColumns}
         data={allowances || {}}
         onClick={(id: string) => deleteAllowance(id)}
       />

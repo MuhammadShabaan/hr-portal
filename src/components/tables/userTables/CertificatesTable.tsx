@@ -1,17 +1,18 @@
 import useSWR from "swr";
-import { DeleteCertificate } from "@/services/UserService";
+import { DeleteUserCertificate } from "@/services/CertificateService";
 import { DataTable } from "../dataTable/DataTable";
 import { CertificatesColumns } from "../dataTableColumns/CertificatesColumn";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserCertificate } from "@/types/Types";
-import React, {useState } from "react";
+import React, { useState } from "react";
 import FormWrapper from "../../FormWrapper";
 import CertificateForm from "../../forms/userForms/CertificateForm";
-import { useAuth } from "@/context/AuthContext";
+
+import pb from "@/services/PocketBase";
 
 const AllCertificates: React.FC = (): JSX.Element => {
-  const { user }= useAuth()
+  const user = pb.authStore.model;
   const [showForm, setShowForm] = useState<boolean>(false);
   const [certificateToUpdate, setCertifcateToUpdate] =
     useState<UserCertificate>();
@@ -40,8 +41,8 @@ const AllCertificates: React.FC = (): JSX.Element => {
   const certificatesColumns = CertificatesColumns(role);
 
   const deleteCertificate = async (certificateId: string): Promise<void> => {
-    const deletedCertificate = await DeleteCertificate(certificateId);
-    if (deletedCertificate === undefined) {
+    const deletedCertificate = await DeleteUserCertificate(certificateId);
+    if (deletedCertificate) {
       toast({
         title: "Success",
         description: "Deleted Successfully",

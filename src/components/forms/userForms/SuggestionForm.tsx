@@ -1,18 +1,23 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import Button from "../../../shared/Button";
 
 import DropDown from "../../../shared/DropDown";
 import TextArea from "../../../shared/TextArea";
-import { CreateUserSuggestion, UpdateUserSuggestion } from "@/services/UserService";
+import {
+  CreateUserSuggestion,
+  UpdateUserSuggestion,
+} from "@/services/SuggestionService";
 import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
-import { useAuth } from "@/context/AuthContext";
+
+import pb from "@/services/PocketBase";
 
 const SuggestionForm: React.FC = ({
   role,
   suggestionToUpdate,
   hideForm,
 }: any): JSX.Element => {
-  console.log("role", role);
+  const user = pb.authStore.model;
+
   const options = [
     { id: 1, text: "complain" },
     { id: 2, text: "suggestion" },
@@ -20,8 +25,6 @@ const SuggestionForm: React.FC = ({
   const [selectedSuggestion, setSelectedSuggestion] =
     useState<any>("Select type");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const { user } = useAuth()
 
   const [formData, setFormData] = useState<any>({
     description: "",

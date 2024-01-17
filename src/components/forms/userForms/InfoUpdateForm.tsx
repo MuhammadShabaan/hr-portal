@@ -1,23 +1,23 @@
-import { useState, ChangeEvent, FormEvent, useContext } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import Input from "../../../shared/Input";
 import Button from "../../../shared/Button";
 // :TODO Check for potential Bugs in this after Auth context Update
 
 import { UpdateUserInfo } from "@/services/UserService";
 import { UpdateUser } from "@/types/Types";
-import { useAuth } from "@/context/AuthContext";
+import pb from "@/services/PocketBase";
 
 const InfoUpdateForm: React.FC = (): JSX.Element => {
-  const { user }: any = useAuth()
+  const user = pb.authStore.model;
 
   const [form, setForm] = useState<UpdateUser>({
-    username: user.username,
-    name: user.name,
-    nic: user.nic,
-    address: user.address,
-    phone: user.phone,
-    emergency_phone: user.emergency_phone,
-    blood_group: user.blood_group,
+    username: user?.username,
+    name: user?.name,
+    nic: user?.nic,
+    address: user?.address,
+    phone: user?.phone,
+    emergency_phone: user?.emergency_phone,
+    blood_group: user?.blood_group,
   });
 
   const formData = new FormData();
@@ -26,14 +26,13 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
     const fileInput = e.target;
     const files = fileInput.files;
 
-    if(!!files){
+    if (!!files) {
       for (let file of files) {
         formData.append("avatar", file);
       }
-    }else{
+    } else {
       //:TODO : Handle This gracefull
     }
-
   };
 
   const createForm = (key: string, value: string): void => {
@@ -54,9 +53,19 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
     formData.append("emergancy_phone", form.emergency_phone);
     formData.append("blood_group", form.blood_group);
 
-    const updatedUser = await UpdateUserInfo(user.id, formData);
+    const updatedUser = await UpdateUserInfo(user?.id, formData);
 
-  
+    if (updatedUser?.id) {
+      setForm({
+        username: "",
+        name: "",
+        nic: "",
+        address: "",
+        phone: "",
+        emergency_phone: "",
+        blood_group: "",
+      });
+    }
   };
 
   return (

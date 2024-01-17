@@ -1,17 +1,10 @@
 import { useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
-const Input = ({
-  label,
-  value,
-  onChange,
-  type = "text",
-  placeholder,
-  errorMessage,
-}: any) => {
+const Input = ({ label, type = "text", errorMessage, ...rest }: any) => {
   const [hide, setHide] = useState<boolean>(false);
 
-  const ValLength = value.length != 0 ? true : false;
+  const ValLength = rest.value.length != 0 ? true : false;
 
   return (
     <div className="mb-3 sm:mb-6">
@@ -31,10 +24,8 @@ const Input = ({
         <input
           type={hide ? type === "password" && "text" : type}
           id={label}
-          placeholder={placeholder}
-          value={value}
           className="rounded-md outline-none border-none w-full focus:outline-none focus:ring-0 px-2 py-2 placeholder:text-sm"
-          onChange={onChange}
+          {...rest}
         />
         {type === "password" && ValLength && (
           <button

@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import React, { useState } from "react";
 import FormWrapper from "../../FormWrapper";
-import { DeleteUserRequest } from "@/services/UserService";
+import { DeleteUserRequest } from "@/services/RequestService";
 import { DataTable } from "../dataTable/DataTable";
 import { RequestsColumns } from "../dataTableColumns/RequestsColumn";
 import { Toaster } from "../../ui/toaster";
@@ -9,11 +9,11 @@ import { useToast } from "../../ui/use-toast";
 import RequestForm from "../../../components/forms/userForms/RequestForm";
 import { UserRequest } from "@/types/Types";
 import Button from "@/shared/Button";
-import { useAuth } from "@/context/AuthContext";
+import pb from "@/services/PocketBase";
 // import { UserRequest } from "@/types/Types";
 
 const AllRequests: React.FC = (): JSX.Element => {
-  const { user }= useAuth();
+  const user = pb.authStore.model;
   const [showForm, setShowForm] = useState<boolean>(false);
   const [requestToUpdate, setRequestToUpdate] = useState<any>();
   const { toast } = useToast();
@@ -39,7 +39,7 @@ const AllRequests: React.FC = (): JSX.Element => {
 
   const deteleRequest = async (requestId: string): Promise<void> => {
     const deletedRequest = await DeleteUserRequest(requestId);
-    if (deletedRequest === undefined) {
+    if (deletedRequest) {
       toast({
         title: "Success",
         description: "Deleted Successfully",
