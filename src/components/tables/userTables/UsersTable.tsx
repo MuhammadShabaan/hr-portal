@@ -20,6 +20,7 @@ const AllUsers: React.FC = (): JSX.Element => {
     data: users,
     error,
     isLoading,
+    mutate,
   } = useSWR("http://127.0.0.1:8090/api/collections/users/records", fetcher);
 
   const deleteUser = async (userId: any): Promise<void> => {
@@ -29,6 +30,8 @@ const AllUsers: React.FC = (): JSX.Element => {
         title: "Success",
         description: "Deleted Successfully",
       });
+
+      mutate();
     } else {
       toast({
         title: "Failure",

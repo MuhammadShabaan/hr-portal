@@ -34,6 +34,7 @@ const AllSuggestions: React.FC = (): JSX.Element => {
     data: suggestions,
     error,
     isLoading,
+    mutate,
   } = useSWR(
     `http://127.0.0.1:8090/api/collections/suggestions/records`,
     fetcher
@@ -45,10 +46,13 @@ const AllSuggestions: React.FC = (): JSX.Element => {
     const deletedSuggestion = await DeleteUserSuggestion(suggestionId);
 
     if (deletedSuggestion) {
+      mutate();
       toast({
         title: "Success",
         description: "Deleted Successfully",
       });
+
+      mutate();
     } else {
       toast({
         title: "Failure",

@@ -21,6 +21,8 @@ const AllCertificates: React.FC = (): JSX.Element => {
 
   const role = user?.role;
 
+  console.log("role in request form", role);
+
   const fetcher = async (
     url: string
   ): Promise<UserCertificate[] | undefined> => {
@@ -33,6 +35,7 @@ const AllCertificates: React.FC = (): JSX.Element => {
     data: certificates,
     error,
     isLoading,
+    mutate,
   } = useSWR(
     `http://127.0.0.1:8090/api/collections/certificates/records`,
     fetcher
@@ -47,6 +50,8 @@ const AllCertificates: React.FC = (): JSX.Element => {
         title: "Success",
         description: "Deleted Successfully",
       });
+
+      mutate();
     } else {
       toast({
         title: "Failure",

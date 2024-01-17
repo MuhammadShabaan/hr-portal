@@ -25,6 +25,7 @@ const AllPayslips: React.FC = (): JSX.Element => {
     data: payslips,
     error,
     isLoading,
+    mutate,
   } = useSWR(`http://127.0.0.1:8090/api/collections/payslips/records`, fetcher);
 
   const payslipsColumns = PayslipsColumns(role);
@@ -36,6 +37,8 @@ const AllPayslips: React.FC = (): JSX.Element => {
         title: "Success",
         description: "Deleted Successfully",
       });
+
+      mutate();
     } else {
       toast({
         title: "Failure",

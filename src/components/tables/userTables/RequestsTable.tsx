@@ -30,6 +30,7 @@ const AllRequests: React.FC = (): JSX.Element => {
     data: requests,
     error,
     isLoading,
+    mutate,
   } = useSWR(
     `http://127.0.0.1:8090/api/collections/user_requests/records`,
     fetcher
@@ -44,6 +45,8 @@ const AllRequests: React.FC = (): JSX.Element => {
         title: "Success",
         description: "Deleted Successfully",
       });
+
+      mutate();
     } else {
       toast({
         title: "Failure",
