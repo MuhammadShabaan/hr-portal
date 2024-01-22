@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { DeleteUserPayslip } from "@/services/PayslipService";
+import { DeleteUserPayslip, GetPayslips } from "@/services/PayslipService";
 import { DataTable } from "../dataTable/DataTable";
 import { PayslipsColumns } from "../dataTableColumns/PayslipsColumn";
 import { Toaster } from "../../ui/toaster";
@@ -7,6 +7,7 @@ import { useToast } from "../../ui/use-toast";
 import { UserPayslip } from "@/types/Types";
 import React from "react";
 import pb from "@/services/PocketBase";
+import useFetchCollection from "@/hooks/useFetchCollection";
 
 const AllPayslips: React.FC = (): JSX.Element => {
   const { toast } = useToast();
@@ -15,18 +16,14 @@ const AllPayslips: React.FC = (): JSX.Element => {
 
   const role = user?.role;
 
-  const fetcher = async (url: string): Promise<UserPayslip[] | undefined> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data?.items;
-  };
+  const fetcherString = "payslips";
 
   const {
     data: payslips,
-    error,
+    IsError,
     isLoading,
     mutate,
-  } = useSWR(`http://127.0.0.1:8090/api/collections/payslips/records`, fetcher);
+  } = useSWR(fetcherString, GetPayslips);
 
   const payslipsColumns = PayslipsColumns(role);
 

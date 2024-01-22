@@ -1,15 +1,17 @@
-import { DeleteUserSuggestion } from "@/services/SuggestionService";
+import {
+  DeleteUserSuggestion,
+  GetSuggestions,
+} from "@/services/SuggestionService";
 import useSWR from "swr";
 import { DataTable } from "../dataTable/DataTable";
 import { SuggestionsColumns } from "../dataTableColumns/SuggestionsColumn";
 import { useState } from "react";
 import FormWrapper from "../../FormWrapper";
-import Suggestions from "../../forms/userForms/SuggestionForm";
+import Suggestions from "../../forms/userFroms/SuggestionForm";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
 import { UserSuggestion } from "@/types/Types";
 import Button from "@/shared/Button";
-
 import pb from "@/services/PocketBase";
 
 const AllSuggestions: React.FC = (): JSX.Element => {
@@ -22,23 +24,13 @@ const AllSuggestions: React.FC = (): JSX.Element => {
   const user = pb.authStore.model;
   const role: string = user?.role;
 
-  const fetcher = async (
-    url: string
-  ): Promise<UserSuggestion[] | undefined> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data?.items;
-  };
-
+  const fetcherString = "suggestions";
   const {
     data: suggestions,
-    error,
+    IsError,
     isLoading,
     mutate,
-  } = useSWR(
-    `http://127.0.0.1:8090/api/collections/suggestions/records`,
-    fetcher
-  );
+  } = useSWR(fetcherString, GetSuggestions);
 
   const suggestionsColumns = SuggestionsColumns(role);
 
@@ -46,7 +38,6 @@ const AllSuggestions: React.FC = (): JSX.Element => {
     const deletedSuggestion = await DeleteUserSuggestion(suggestionId);
 
     if (deletedSuggestion) {
-      mutate();
       toast({
         title: "Success",
         description: "Deleted Successfully",
@@ -78,6 +69,7 @@ const AllSuggestions: React.FC = (): JSX.Element => {
             role={role}
             suggestionToUpdate={suggestionToUpdate}
             hideForm={(): void => setShowForm(!showForm)}
+            updateData={mutate}
           />
         </FormWrapper>
       )}

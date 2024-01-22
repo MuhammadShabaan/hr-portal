@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({
   const role = user?.role;
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border ">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

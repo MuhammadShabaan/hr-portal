@@ -7,7 +7,7 @@ import TextArea from "@/shared/TextArea";
 import { CreateAllowance } from "@/types/Types";
 import pb from "@/services/PocketBase";
 
-const AllowanceForm = ({ hideForm }: any) => {
+const AllowanceForm = ({ hideForm, updateData }: any) => {
   const user = pb.authStore.model;
 
   const [formData, setFormData] = useState<any>({
@@ -38,6 +38,7 @@ const AllowanceForm = ({ hideForm }: any) => {
 
     if (allowance?.id) {
       setFormData({ allowance_amount: "", description: "" });
+      updateData();
       hideForm();
     }
   };

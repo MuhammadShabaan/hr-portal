@@ -1,16 +1,14 @@
 import useSWR from "swr";
 import React, { useState } from "react";
 import FormWrapper from "../../FormWrapper";
-import { DeleteUserRequest } from "@/services/RequestService";
+import { DeleteUserRequest, GetRequests } from "@/services/RequestService";
 import { DataTable } from "../dataTable/DataTable";
 import { RequestsColumns } from "../dataTableColumns/RequestsColumn";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
-import RequestForm from "../../../components/forms/userForms/RequestForm";
-import { UserRequest } from "@/types/Types";
+import RequestForm from "../../forms/userFroms/RequestForm";
 import Button from "@/shared/Button";
 import pb from "@/services/PocketBase";
-// import { UserRequest } from "@/types/Types";
 
 const AllRequests: React.FC = (): JSX.Element => {
   const user = pb.authStore.model;
@@ -20,21 +18,13 @@ const AllRequests: React.FC = (): JSX.Element => {
 
   const role: string = user?.role;
 
-  const fetcher = async (url: string): Promise<UserRequest[] | undefined> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data?.items;
-  };
-
+  const fetcherString = "";
   const {
     data: requests,
-    error,
+    IsError,
     isLoading,
     mutate,
-  } = useSWR(
-    `http://127.0.0.1:8090/api/collections/user_requests/records`,
-    fetcher
-  );
+  } = useSWR(fetcherString, GetRequests);
 
   const requestsColumns = RequestsColumns(role);
 
@@ -69,6 +59,7 @@ const AllRequests: React.FC = (): JSX.Element => {
             requestToUpdate={requestToUpdate}
             role={role}
             hideForm={() => setShowForm(!showForm)}
+            updateData={mutate}
           />
         </FormWrapper>
       )}

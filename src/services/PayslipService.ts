@@ -2,6 +2,17 @@ import pb from "./PocketBase";
 import { RecordModel } from "pocketbase";
 import { User } from "@/types/Types";
 
+// Get
+
+const GetPayslips = async (): Promise<RecordModel[] | void> => {
+  try {
+    const payslips = await pb.collection("payslips").getFullList();
+    return payslips;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Create
 
 const CreateUserPayslip = async (data: User): Promise<RecordModel | void> => {
@@ -43,4 +54,4 @@ const DeleteUserPayslip = async (
   }
 };
 
-export { CreateUserPayslip, UpdateUserPayslip, DeleteUserPayslip };
+export { GetPayslips, CreateUserPayslip, UpdateUserPayslip, DeleteUserPayslip };

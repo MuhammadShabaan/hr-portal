@@ -1,35 +1,31 @@
 import useSWR from "swr";
-import { DeleteUserAllowance } from "@/services/AllowanceService";
+import {
+  DeleteUserAllowance,
+  GetAllowances,
+} from "@/services/AllowanceService";
 import { DataTable } from "../dataTable/DataTable";
-
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
-import { UserAllowance } from "@/types/Types";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { AllowancesColumns } from "../dataTableColumns/AllowancesColumn";
 import pb from "@/services/PocketBase";
+import AllowanceForm from "../../forms/userFroms/AllowanceForm";
+import FormWrapper from "../../../components/FormWrapper";
+import Button from "@/shared/Button";
 
 const AllAllowances: React.FC = (): JSX.Element => {
+  const [showForm, setShowForm] = useState<boolean>(false);
   const { toast } = useToast();
   const user = pb.authStore.model;
   const role = user?.role;
 
-  const fetcher = async (url: string): Promise<UserAllowance[] | undefined> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data?.items;
-  };
-
+  const fetcherString = "allowances";
   const {
     data: allowances,
     error,
     isLoading,
     mutate,
-  } = useSWR(
-    `http://127.0.0.1:8090/api/collections/user_allowances/records`,
-    fetcher
-  );
+  } = useSWR(fetcherString, GetAllowances);
 
   const allowancesColumns = AllowancesColumns(role);
 
@@ -51,14 +47,30 @@ const AllAllowances: React.FC = (): JSX.Element => {
   };
 
   return (
-    <>
+    <div className="">
       <Toaster />
+      <div className="flex items-center justify-end">
+        {role === "employee" && (
+          <Button
+            label="Request Allowance"
+            onClick={() => setShowForm(!showForm)}
+          />
+        )}
+      </div>{" "}
+      {showForm && (
+        <FormWrapper onClick={() => setShowForm(!showForm)}>
+          <AllowanceForm
+            hideForm={() => setShowForm(!showForm)}
+            updateData={mutate}
+          />
+        </FormWrapper>
+      )}
       <DataTable
         columns={allowancesColumns}
         data={allowances || {}}
-        onClick={(id: string) => deleteAllowance(id)}
+        handleDelete={(id: string) => deleteAllowance(id)}
       />
-    </>
+    </div>
   );
 };
 

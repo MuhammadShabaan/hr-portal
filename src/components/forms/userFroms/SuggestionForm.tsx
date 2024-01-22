@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import Button from "../../../shared/Button";
 
 import DropDown from "../../../shared/DropDown";
@@ -10,12 +10,14 @@ import {
 import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
 
 import pb from "@/services/PocketBase";
+import { mutate } from "swr";
 
-const SuggestionForm: React.FC = ({
+const SuggestionForm = ({
   role,
   suggestionToUpdate,
   hideForm,
-}: any): JSX.Element => {
+  updateData,
+}: any) => {
   const user = pb.authStore.model;
 
   const options = [

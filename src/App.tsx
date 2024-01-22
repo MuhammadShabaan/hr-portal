@@ -6,9 +6,12 @@ import PayslipSection from "./components/PayslipSection";
 import SuggestionSection from "./components/SuggestionSection";
 import AllowanceSection from "./components/AllowanceSection";
 import RequestSection from "./components/RequestSection";
-import InfoUpdateForm from "./components/forms/userForms/InfoUpdateForm";
+import InfoUpdateForm from "./components/forms/userFroms/InfoUpdateForm";
 
 import NotFound from "./pages/NotFound";
+
+import SendResetEmailForm from "./components/forms/userFroms/sendResetEmailForm";
+import ResetPasswordForm from "./components/forms/userFroms/ResetPasswordForm";
 
 function Routing() {
   return (
@@ -22,6 +25,8 @@ function Routing() {
         <Route path="requests" element={<RequestSection />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/resetpassword" element={<SendResetEmailForm />} />
+      <Route path="/resetconfirm/:token" element={<ResetPasswordForm />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

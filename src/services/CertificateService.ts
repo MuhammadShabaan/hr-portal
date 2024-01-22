@@ -2,6 +2,17 @@ import pb from "./PocketBase";
 import { RecordModel } from "pocketbase";
 import { CreateCertificate } from "@/types/Types";
 
+//  Get
+
+const GetCertificates = async (): Promise<RecordModel[] | void> => {
+  try {
+    const certificates = await pb.collection("certificates").getFullList();
+    return certificates;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Create
 
 const CreateUserCertificate = async (
@@ -47,4 +58,9 @@ const DeleteUserCertificate = async (
   }
 };
 
-export { CreateUserCertificate, UpdateUserCertificate, DeleteUserCertificate };
+export {
+  GetCertificates,
+  CreateUserCertificate,
+  UpdateUserCertificate,
+  DeleteUserCertificate,
+};

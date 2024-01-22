@@ -2,6 +2,17 @@ import pb from "./PocketBase";
 import { RecordModel } from "pocketbase";
 import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
 
+// Get
+
+const GetSuggestions = async (): Promise<RecordModel[] | void> => {
+  try {
+    const suggestions = await pb.collection("suggestions").getFullList();
+    return suggestions;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //  Create
 
 const CreateUserSuggestion = async (
@@ -47,4 +58,9 @@ const DeleteUserSuggestion = async (
   }
 };
 
-export { CreateUserSuggestion, UpdateUserSuggestion, DeleteUserSuggestion };
+export {
+  GetSuggestions,
+  CreateUserSuggestion,
+  UpdateUserSuggestion,
+  DeleteUserSuggestion,
+};

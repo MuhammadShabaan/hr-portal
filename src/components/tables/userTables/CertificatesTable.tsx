@@ -1,5 +1,8 @@
 import useSWR from "swr";
-import { DeleteUserCertificate } from "@/services/CertificateService";
+import {
+  DeleteUserCertificate,
+  GetCertificates,
+} from "@/services/CertificateService";
 import { DataTable } from "../dataTable/DataTable";
 import { CertificatesColumns } from "../dataTableColumns/CertificatesColumn";
 import { Toaster } from "../../ui/toaster";
@@ -7,9 +10,10 @@ import { useToast } from "../../ui/use-toast";
 import { UserCertificate } from "@/types/Types";
 import React, { useState } from "react";
 import FormWrapper from "../../FormWrapper";
-import CertificateForm from "../../forms/userForms/CertificateForm";
+import CertificateForm from "../../forms/userFroms/CertificateForm";
 
 import pb from "@/services/PocketBase";
+import useFetchCollection from "@/hooks/useFetchCollection";
 
 const AllCertificates: React.FC = (): JSX.Element => {
   const user = pb.authStore.model;
@@ -21,25 +25,13 @@ const AllCertificates: React.FC = (): JSX.Element => {
 
   const role = user?.role;
 
-  console.log("role in request form", role);
-
-  const fetcher = async (
-    url: string
-  ): Promise<UserCertificate[] | undefined> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data?.items;
-  };
-
+  const fetcherString = "certificates";
   const {
     data: certificates,
-    error,
+    IsError,
     isLoading,
     mutate,
-  } = useSWR(
-    `http://127.0.0.1:8090/api/collections/certificates/records`,
-    fetcher
-  );
+  } = useSWR(fetcherString, GetCertificates);
 
   const certificatesColumns = CertificatesColumns(role);
 
@@ -61,14 +53,14 @@ const AllCertificates: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className="overflow-y-auto">
       <Toaster />
       {showForm && (
         <FormWrapper onClick={() => setShowForm(!showForm)}>
           <CertificateForm
-            role={role}
             certificateToUpdate={certificateToUpdate}
             hideForm={() => setShowForm(!showForm)}
+            updateData={mutate}
           />
         </FormWrapper>
       )}

@@ -1,27 +1,21 @@
-import { DeleteUser } from "@/services/UserService";
+import { DeleteUser, GetUsers } from "@/services/UserService";
 import useSWR from "swr";
 import { DataTable } from "../dataTable/DataTable";
 import { UsersColumns } from "../dataTableColumns/UsersColumn";
 import { Toaster } from "../../ui/toaster";
 import { useToast } from "../../ui/use-toast";
-import { User } from "@/types/Types";
 import React from "react";
 
 const AllUsers: React.FC = (): JSX.Element => {
   const { toast } = useToast();
 
-  const fetcher = async (url: string): Promise<User[] | undefined> => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data?.items;
-  };
-
+  const fetcherString = "users";
   const {
     data: users,
     error,
     isLoading,
     mutate,
-  } = useSWR("http://127.0.0.1:8090/api/collections/users/records", fetcher);
+  } = useSWR(fetcherString, GetUsers);
 
   const deleteUser = async (userId: any): Promise<void> => {
     const deletedUser = await DeleteUser(userId);
@@ -46,7 +40,7 @@ const AllUsers: React.FC = (): JSX.Element => {
       <DataTable
         columns={UsersColumns}
         data={users || {}}
-        onClick={(id: string) => deleteUser(id)}
+        handleDelete={(id: string) => deleteUser(id)}
       />
     </div>
   );

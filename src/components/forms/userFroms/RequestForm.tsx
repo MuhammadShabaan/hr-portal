@@ -14,6 +14,7 @@ const RequestForm: React.FC = ({
   requestToUpdate,
   role,
   hideForm,
+  updateData,
 }: any): JSX.Element => {
   const options = [
     { id: 1, text: "leave" },
@@ -78,7 +79,6 @@ const RequestForm: React.FC = ({
       role === "employee"
         ? await CreateUserRequest(data)
         : await UpdateUserRequest(requestToUpdate?.id, updatedData);
-    note: "";
     if (request?.id) {
       if (role === "employee") {
         setFormData({
@@ -87,9 +87,11 @@ const RequestForm: React.FC = ({
         });
         setSelectedRequest("Select request type");
         hideForm();
+        updateData();
       } else {
         setUpdateFormData({ note: "" });
         hideForm();
+        updateData();
       }
     }
   };

@@ -2,6 +2,17 @@ import { CreateAllowance } from "@/types/Types";
 import pb from "./PocketBase";
 import { RecordModel } from "pocketbase";
 
+// Get
+
+const GetAllowances = async (): Promise<RecordModel[] | void> => {
+  try {
+    const allowances = await pb.collection("user_allowances").getFullList();
+    return allowances;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Create
 
 const CreateUserAllowance = async (
@@ -47,4 +58,9 @@ const DeleteUserAllowance = async (
   }
 };
 
-export { CreateUserAllowance, UpdateUserAllowance, DeleteUserAllowance };
+export {
+  GetAllowances,
+  CreateUserAllowance,
+  UpdateUserAllowance,
+  DeleteUserAllowance,
+};

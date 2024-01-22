@@ -7,10 +7,10 @@ const Input = ({ label, type = "text", errorMessage, ...rest }: any) => {
   const ValLength = rest.value.length != 0 ? true : false;
 
   return (
-    <div className="mb-3 sm:mb-6">
+    <div className="">
       <label
         htmlFor={label}
-        className={`block my-1 sm:my-3 capitalize text-base sm:text-lg ${
+        className={`block my-1 capitalize text-base  ${
           ValLength ? "text-neutral-700" : "text-neutral-500"
         }`}
       >

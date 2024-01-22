@@ -12,12 +12,12 @@ import { CreateCertificate } from "@/types/Types";
 import pb from "@/services/PocketBase";
 
 const CertificateForm: React.FC = ({
-  role,
   certificateToUpdate,
   hideForm,
+  updateData,
 }: any): JSX.Element => {
   const user = pb.authStore.model;
-
+  const role = user?.role;
   const options = [
     { id: 1, text: "certificate" },
     { id: 2, text: "letter" },
@@ -86,9 +86,11 @@ const CertificateForm: React.FC = ({
         setFormData({ title: "" });
         setSelectedCertificate("Select here");
         hideForm();
+        updateData();
       } else {
         setSeletectedStatus("Update status");
         hideForm();
+        updateData();
       }
     }
   };

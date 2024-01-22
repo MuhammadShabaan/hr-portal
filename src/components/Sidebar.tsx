@@ -1,6 +1,12 @@
 import TabButton from "@/shared/TabButton";
 import ProfileInfo from "./ProfileInfo";
-import { FaCodeBranch, FaHome, FaServer, FaTeamspeak, FaVoicemail } from "react-icons/fa";
+import {
+  FaCodeBranch,
+  FaHome,
+  FaServer,
+  FaTeamspeak,
+  FaVoicemail,
+} from "react-icons/fa";
 
 const Sidebar = () => {
   return (
@@ -10,14 +16,14 @@ const Sidebar = () => {
           <ProfileInfo />
         </div>
         <div>
-       { tabButtons.map((button, index) => (
-          <TabButton
-            key={index}
-            icon={button.icon}
-            label={button.label}
-            textColor={button.textColor}
-            to={button.to}
-          />
+          {tabButtons.map((button, index) => (
+            <TabButton
+              key={index}
+              icon={button.icon}
+              label={button.label}
+              textColor={button.textColor}
+              to={button.to}
+            />
           ))}
         </div>
       </div>
@@ -59,6 +65,3 @@ const tabButtons = [
     to: "/requests",
   },
 ];
-
-
-

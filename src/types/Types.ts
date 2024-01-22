@@ -37,7 +37,6 @@ export interface User {
   verified: boolean;
 }
 
-
 export interface UserCertificate {
   id: string;
   collectionId: string;
@@ -153,6 +152,7 @@ export interface UpdateUser {
   emergency_phone: string;
   blood_group: string;
   avatar?: string;
+  email: string;
 }
 
 export interface UpdateSuggestion {
@@ -163,5 +163,3 @@ export interface UpdateRequest {
   status: "pending" | "accepted" | "declined";
   note: string;
 }
-
-

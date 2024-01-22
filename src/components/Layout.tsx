@@ -17,8 +17,10 @@ const Layout: React.FC = () => {
         </div>
 
         {/* content */}
-        <div className="grow overflow-auto ">
-          <Outlet />
+        <div className="grow overflow-auto p-4">
+          <div className="space-x-20 rounded-md border border-gray-400 h-full flex items-start justify-center w-full">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>
