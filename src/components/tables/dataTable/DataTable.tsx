@@ -30,6 +30,7 @@ export function DataTable<TData, TValue>({
   data,
   handleDelete,
   handleEdit,
+  collectionName,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -71,18 +72,31 @@ export function DataTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {/* {"hello"} */}
                   </TableCell>
                 ))}
                 <div className="flex items-center justify-center gap-3">
-                  <RiDeleteBin2Line
-                    className="text-red-800 cursor-pointer"
-                    onClick={() => handleDelete(row?.original?.id)}
-                  />
-                  {role !== "employee" && (
-                    <FaEdit
-                      className="text-green-400 cursor-pointer"
-                      onClick={() => handleEdit(row?.original)}
+                  <div className="flex items-center justify-center gap-3">
+                    <RiDeleteBin2Line
+                      className="text-red-800 cursor-pointer"
+                      onClick={() => handleDelete(row?.original?.id)}
                     />
+                    {role !== "employee" && (
+                      <FaEdit
+                        className="text-green-400 cursor-pointer"
+                        onClick={() => handleEdit(row?.original)}
+                      />
+                    )}
+                  </div>
+                  {collectionName === "certificates" && (
+                    <div>
+                      <a
+                        href={`http://127.0.0.1:8090/api/files/${collectionName}/${row?.original?.id}/${row?.original?.file}`}
+                        target="_blank"
+                      >
+                        View File
+                      </a>
+                    </div>
                   )}
                 </div>
               </TableRow>

@@ -5,8 +5,15 @@ import { User } from "@/types/Types";
 // Get
 
 const GetPayslips = async (): Promise<RecordModel[] | void> => {
+  const user = pb.authStore.model;
   try {
-    const payslips = await pb.collection("payslips").getFullList();
+    const payslips =
+      user?.role === "employee"
+        ? await pb
+            .collection("payslips")
+            .getFullList({ filter: `user_id = "${user?.id}"` })
+        : await pb.collection("payslips").getFullList();
+
     return payslips;
   } catch (error) {
     console.log(error);

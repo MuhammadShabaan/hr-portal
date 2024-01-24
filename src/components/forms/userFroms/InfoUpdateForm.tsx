@@ -8,6 +8,7 @@ import { UpdateUser } from "@/types/Types";
 import pb from "@/services/PocketBase";
 import ProfileInfo from "../../ProfileInfo";
 import { IoPersonOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const InfoUpdateForm: React.FC = (): JSX.Element => {
   const user = pb.authStore.model;
@@ -15,7 +16,7 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
   const avatar = user?.avatar;
   const getAvatar = `http://127.0.0.1:8090/api/files/users/${userId}/${avatar}`;
 
-  const [avatarUrl, setAvatarUrl] = useState<string>(getAvatar);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState<UpdateUser>({
     username: user?.username,
@@ -28,20 +29,20 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
     email: user?.email,
   });
 
+  const [selectedFile, setSelectedFile] = useState<any>(null);
+
   const formData = new FormData();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const fileInput = e.target;
-    const files = fileInput.files;
+    const file = e.target.files[0];
+    // const files = fileInput.files;
 
-    if (!!files) {
-      for (let file of files) {
-        formData.append("avatar", file);
-        setAvatarUrl(file?.name);
-      }
-    } else {
-      //:TODO : Handle This gracefull
-    }
+    setSelectedFile(file);
+
+    // console.log("file");
+    // for (let file of files) {
+    //   formData.append("avatar", file);
+    // }
   };
 
   const createForm = (key: string, value: string): void => {
@@ -62,6 +63,9 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
     formData.append("emergancy_phone", form.emergency_phone);
     formData.append("blood_group", form.blood_group);
     formData.append("email", form.email);
+    formData.append("avatar", selectedFile);
+
+    // console.log("formData", formData.get("avatar"));
 
     const updatedUser = await UpdateUserInfo(user?.id, formData);
 
@@ -76,6 +80,8 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
         blood_group: "",
         email: "",
       });
+      setSelectedFile(null);
+      navigate("/");
     }
   };
 
@@ -101,17 +107,6 @@ const InfoUpdateForm: React.FC = (): JSX.Element => {
         </p>
         <div className="">
           <form onSubmit={handleSubmit}>
-            <div className="flex justify-center items-center bg-background-primary w-10 h-10 rounded-full my-2 sm:my-3">
-              {avatar.length ? (
-                <img
-                  src={avatarUrl}
-                  alt=""
-                  className="rounded-full w-full h-full"
-                />
-              ) : (
-                <IoPersonOutline className="w-10 h-10" />
-              )}
-            </div>
             <input type="file" id="fileInput" onChange={handleFileChange} />
             <div className="flex items-center justify-between gap-3">
               <Input

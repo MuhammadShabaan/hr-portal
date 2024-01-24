@@ -5,8 +5,14 @@ import { CreateCertificate } from "@/types/Types";
 //  Get
 
 const GetCertificates = async (): Promise<RecordModel[] | void> => {
+  const user = pb.authStore.model;
   try {
-    const certificates = await pb.collection("certificates").getFullList();
+    const certificates =
+      user?.role === "employee"
+        ? await pb
+            .collection("certificates")
+            .getFullList({ filter: `user_id = "${user?.id}"` })
+        : await pb.collection("certificates").getFullList();
     return certificates;
   } catch (error) {
     console.log(error);

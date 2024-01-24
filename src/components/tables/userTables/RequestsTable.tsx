@@ -18,7 +18,7 @@ const AllRequests: React.FC = (): JSX.Element => {
 
   const role: string = user?.role;
 
-  const fetcherString = "";
+  const fetcherString = "requests";
   const {
     data: requests,
     IsError,
@@ -45,6 +45,14 @@ const AllRequests: React.FC = (): JSX.Element => {
     }
   };
 
+  const mutateAfterAdditon = () => {
+    mutate();
+    toast({
+      title: "Success",
+      description: "Suggestion sent succsessfully",
+    });
+  };
+
   return (
     <div>
       <Toaster />
@@ -59,7 +67,7 @@ const AllRequests: React.FC = (): JSX.Element => {
             requestToUpdate={requestToUpdate}
             role={role}
             hideForm={() => setShowForm(!showForm)}
-            updateData={mutate}
+            updateData={() => mutateAfterAdditon()}
           />
         </FormWrapper>
       )}

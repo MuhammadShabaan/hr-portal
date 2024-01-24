@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 
 import SendResetEmailForm from "./components/forms/userFroms/sendResetEmailForm";
 import ResetPasswordForm from "./components/forms/userFroms/ResetPasswordForm";
+import CreateUser from "./components/CreateUser";
 
 function Routing() {
   return (
@@ -23,6 +24,7 @@ function Routing() {
         <Route path="suggestions" element={<SuggestionSection />} />
         <Route path="allowances" element={<AllowanceSection />} />
         <Route path="requests" element={<RequestSection />} />
+        <Route path="createnewemployee" element={<CreateUser />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/resetpassword" element={<SendResetEmailForm />} />

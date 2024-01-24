@@ -51,6 +51,10 @@ export const CertificatesColumns = (role: string) => {
             accessorKey: "file",
             header: "File",
           },
+          {
+            accessorKey: "action",
+            header: "Action",
+          },
         ];
 
   return certificatesColumns;

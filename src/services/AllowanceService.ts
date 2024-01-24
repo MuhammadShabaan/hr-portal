@@ -5,8 +5,14 @@ import { RecordModel } from "pocketbase";
 // Get
 
 const GetAllowances = async (): Promise<RecordModel[] | void> => {
+  const user = pb.authStore.model;
   try {
-    const allowances = await pb.collection("user_allowances").getFullList();
+    const allowances =
+      user?.role === "employee"
+        ? await pb
+            .collection("user_allowances")
+            .getFullList({ filter: `user_id = "${user?.id}"` })
+        : await pb.collection("user_allowances").getFullList();
     return allowances;
   } catch (error) {
     console.log(error);

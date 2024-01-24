@@ -15,6 +15,7 @@ import Button from "@/shared/Button";
 
 const AllAllowances: React.FC = (): JSX.Element => {
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [selectedAllowance, setSelectedAllowance] = useState<any>();
   const { toast } = useToast();
   const user = pb.authStore.model;
   const role = user?.role;
@@ -61,7 +62,8 @@ const AllAllowances: React.FC = (): JSX.Element => {
         <FormWrapper onClick={() => setShowForm(!showForm)}>
           <AllowanceForm
             hideForm={() => setShowForm(!showForm)}
-            updateData={mutate}
+            selectedAllowance={selectedAllowance}
+            updateData={() => mutate()}
           />
         </FormWrapper>
       )}
@@ -69,6 +71,10 @@ const AllAllowances: React.FC = (): JSX.Element => {
         columns={allowancesColumns}
         data={allowances || {}}
         handleDelete={(id: string) => deleteAllowance(id)}
+        handleEdit={(allowance) => {
+          setSelectedAllowance(allowance);
+          setShowForm(!showForm);
+        }}
       />
     </div>
   );

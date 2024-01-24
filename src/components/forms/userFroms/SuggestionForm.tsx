@@ -59,16 +59,17 @@ const SuggestionForm = ({
       type: selectedSuggestion.text,
       suggested_by: user?.username,
       user_email: user?.email,
+      user_id: user?.id,
     };
 
-    const updateData: UpdateSuggestion = {
+    const updatedData: UpdateSuggestion = {
       response: addNote.response,
     };
 
     const suggestion =
       role === "employee"
         ? await CreateUserSuggestion(data)
-        : await UpdateUserSuggestion(suggestionToUpdate.id, updateData);
+        : await UpdateUserSuggestion(suggestionToUpdate.id, updatedData);
 
     if (suggestion?.id) {
       if (role === "employee") {
@@ -77,9 +78,11 @@ const SuggestionForm = ({
         });
         setSelectedSuggestion("Select here");
         hideForm();
+        updateData();
       } else {
         setAddNote({ response: "" });
         hideForm();
+        updateData();
       }
     }
   };

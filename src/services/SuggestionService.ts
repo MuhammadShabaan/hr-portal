@@ -5,8 +5,14 @@ import { CreateSuggestion, UpdateSuggestion } from "@/types/Types";
 // Get
 
 const GetSuggestions = async (): Promise<RecordModel[] | void> => {
+  const user = pb.authStore.model;
   try {
-    const suggestions = await pb.collection("suggestions").getFullList();
+    const suggestions =
+      user?.role === "employee"
+        ? await pb
+            .collection("suggestions")
+            .getFullList({ filter: `user_id = "${user?.id}"` })
+        : await pb.collection("suggestions").getFullList();
     return suggestions;
   } catch (error) {
     console.log(error);

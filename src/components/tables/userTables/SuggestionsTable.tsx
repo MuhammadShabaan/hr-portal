@@ -52,6 +52,14 @@ const AllSuggestions: React.FC = (): JSX.Element => {
     }
   };
 
+  const mutateAfterAdditon = () => {
+    mutate();
+    toast({
+      title: "Success",
+      description: "Suggestion sent succsessfully",
+    });
+  };
+
   return (
     <div>
       <Toaster />
@@ -69,7 +77,7 @@ const AllSuggestions: React.FC = (): JSX.Element => {
             role={role}
             suggestionToUpdate={suggestionToUpdate}
             hideForm={(): void => setShowForm(!showForm)}
-            updateData={mutate}
+            updateData={() => mutateAfterAdditon()}
           />
         </FormWrapper>
       )}

@@ -31,6 +31,8 @@ const CertificateForm: React.FC = ({
   });
   const [selectedStatus, setSeletectedStatus] = useState<any>("Update Status");
 
+  const [selectedFile, setSelectedFile] = useState<any>(null);
+
   const createForm = (key: string, value: string): void => {
     setFormData({
       ...formData,
@@ -48,15 +50,16 @@ const CertificateForm: React.FC = ({
   const updateForm = new FormData();
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const fileInput = e.target;
-    const files = fileInput.files;
-    if (files) {
-      for (let file of files) {
-        updateForm.append("file", file);
-      }
-    } else {
-      // :TODO Handle this gracefully
-    }
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    // const files = fileInput.files;
+    // if (files) {
+    //   for (let file of files) {
+    //     updateForm.append("file", file);
+    //   }
+    // } else {
+    //   // :TODO Handle this gracefully
+    // }
   };
 
   // console.log("updateform==>", updateForm);
@@ -72,8 +75,10 @@ const CertificateForm: React.FC = ({
       requested_by: user?.username,
       user_email: user?.email,
       status: "pending",
+      user_id: user?.id,
     };
 
+    updateForm.append("file", selectedFile);
     updateForm.append("status", selectedStatus?.text);
 
     const certificate =
@@ -82,7 +87,7 @@ const CertificateForm: React.FC = ({
         : await UpdateUserCertificate(certificateToUpdate?.id, updateForm);
 
     if (certificate?.id) {
-      if (role === "employee") {
+      if (certificate?.role === "employee") {
         setFormData({ title: "" });
         setSelectedCertificate("Select here");
         hideForm();
@@ -98,7 +103,7 @@ const CertificateForm: React.FC = ({
   return (
     <div className="bg-neutral-200 rounded-md py-3 md:py-6 w-[542px] h-[600px] md:px-10 px-3 space-y-24 overflow-y-auto">
       <p className="text-center text-h1b md:text-h3r capitalize">
-        {role === "employee" ? "Request Certificate" : "Update Request"}
+        {role === "employee" ? "Request Certificate" : "Upload Certificate"}
       </p>
       <div className="space-y-5">
         <form onSubmit={handleSubmit}>

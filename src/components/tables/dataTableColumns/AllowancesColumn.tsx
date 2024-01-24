@@ -10,8 +10,16 @@ export const AllowancesColumns = (role: string) => {
             header: "Id",
           },
           {
-            accessorKey: "allowance_amount",
-            header: "Allowance Amount",
+            accessorKey: "requested_allowance",
+            header: "Requested Allowance",
+          },
+          {
+            accessorKey: "approved_allowance",
+            header: "Approved Amount",
+          },
+          {
+            accessorKey: "status",
+            header: "Status",
           },
           {
             accessorKey: "description",
@@ -32,8 +40,12 @@ export const AllowancesColumns = (role: string) => {
             header: "User Id",
           },
           {
-            accessorKey: "allowance_amount",
-            header: "Allowance Amount",
+            accessorKey: "requested_allowance",
+            header: "Requested_allowance",
+          },
+          {
+            accessorKey: "approved_allowance",
+            header: "Approved Allowance",
           },
           {
             accessorKey: "requested_by",

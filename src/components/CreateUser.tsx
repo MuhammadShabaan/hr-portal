@@ -2,7 +2,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 
-import Pocketbase from "pocketbase";
 import DropDown from "../shared/DropDown";
 import pb from "@/services/PocketBase";
 
@@ -17,6 +16,7 @@ interface FormData {
 }
 
 const CreateUser = ({ setHideUserModal, userType }: any) => {
+  // const pb = new Pocketbase("http://127.0.0.1:8090");
   const user = pb.authStore.model;
 
   const defaulrole = [
@@ -40,8 +40,6 @@ const CreateUser = ({ setHideUserModal, userType }: any) => {
   const [selectedRole, setSelectedRole] = useState<role | string>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>("");
-
-  const pb = new Pocketbase("http://127.0.0.1:8090");
 
   const [formData, setFormData] = useState<FormData>({
     email: "",

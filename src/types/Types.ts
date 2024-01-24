@@ -83,7 +83,8 @@ export interface UserAllowance {
   updated: string;
   user_id: string;
   status: "requested" | "approved" | "archived" | "rejected";
-  allowance_amount: number;
+  requested_allowance: number;
+  approved_allowance: number;
   recurring: boolean;
   description: string;
   requested_by: string;
@@ -113,10 +114,11 @@ export interface CreateCertificate {
   requested_by: string;
   user_email: string;
   status: "pending";
+  user_id: string;
 }
 
 export interface CreateAllowance {
-  allowance_amount: number;
+  requested_allowance: number;
   user_id: string;
   requested_by: string;
   status: "requested";
